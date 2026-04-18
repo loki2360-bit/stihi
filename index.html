@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="rgba(20,20,40,0.8)">
+<title>Поэтический Блокнот</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+<style>
+:root {
+  --glass-bg: rgba(255,255,255,0.08);
+  --glass-border: rgba(255,255,255,0.15);
+  --glass-shadow: rgba(0,0,0,0.3);
+  --glass-blur: 20px;
+  --accent: #a78bfa;
+  --accent2: #6ee7b7;
+  --accent3: #f472b6;
+  --text: #f0f0f0;
+  --text-dim: rgba(240,240,240,0.6);
+  --danger: #f87171;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  padding-bottom: 100px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(167,139,250,0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(110,231,183,0.1) 0%, transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(244,114,182,0.1) 0%, transparent 50%);
+  z-index: -1;
+  animation: bgShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+  0% { transform: translate(0,0) rotate(0deg); }
+  100% { transform: translate(-5%,3%) rotate(5deg); }
+}
+
+/* === GLASS MIXIN === */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.glass-heavy {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* === HEADER === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header h1 span { font-size: 1.6rem; -webkit-text-fill-color: initial; }
+
+/* === SEARCH & FILTERS === */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.search-bar input:focus {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+}
+
+.search-bar input::placeholder { color: var(--text-dim); }
+
+.filter-toggle {
+  width: 46px; height: 46px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.filter-toggle.active {
+  background: rgba(167,139,250,0.2);
+  border-color: var(--accent);
+}
+
+.filters-panel {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.filters-panel.show { display: flex; }
+
+.filter-chip {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-dim);
+  transition: all 0.3s;
+  user-select: none;
+}
+
+.filter-chip.active {
+  background: rgba(167,139,250,0.25);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.filter-chip.date-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-chip.date-chip input {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  width: 110px;
+  outline: none;
+}
+
+.filter-chip.date-chip input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.6;
+}
+
+/* === POEM CARDS === */
+.poems-list {
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.poem-card {
+  padding: 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.poem-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, transparent 60%, rgba(167,139,250,0.05));
+  pointer-events: none;
+}
+
+.poem-card:active { transform: scale(0.98); }
+
+.poem-card .poem-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 30px;
+}
+
+.poem-card .poem-author {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.poem-card .poem-date {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.poem-card .poem-preview {
+  font-size: 0.85rem;
+  color: rgba(240,240,240,0.7);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.folder-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-dim);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-dim);
+}
+
+.empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+
+/* === FAB === */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: linear-gradient(135deg, rgba(167,139,250,0.6), rgba(244,114,182,0.6));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(167,139,250,0.4);
+  transition: all 0.3s;
+  z-index: 90;
+}
+
+.fab:active { transform: scale(0.9); }
+
+/* === SCREENS === */
+.screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 200;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: none;
+  flex-direction: column;
+  animation: slideIn 0.3s ease;
+}
+
+.screen.active { display: flex; }
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0.5; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.screen-header .back-btn {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-header h2 {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.screen-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+/* === EDITOR === */
+.form-group { margin-bottom: 16px; }
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+}
+
+/* Rich text editor */
+.editor-wrapper {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+.editor-toolbar {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+}
+
+.editor-toolbar button {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.editor-toolbar button:active { background: rgba(167,139,250,0.3); }
+
+.editor-toolbar .color-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.editor-toolbar .color-btn input[type="color"] {
+  position: absolute;
+  width: 100%; height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.editor-area {
+  min-height: 250px;
+  padding: 16px;
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  color: var(--text);
+}
+
+.editor-area:empty::before {
+  content: 'Введите стихотворение...';
+  color: var(--text-dim);
+}
+
+/* === TAGS EDITOR === */
+.tags-editor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tag-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tag-input-row input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  min-width: 80px;
+}
+
+.tag-input-row input[type="color"] {
+  width: 36px; height: 36px;
+  border: 2px solid var(--glass-border);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.tag-remove {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 0 0 4px;
+  line-height: 1;
+}
+
+.tag-remove:active { color: var(--danger); }
+
+.add-tag-btn {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px dashed var(--glass-border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.add-tag-btn:active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* === FOLDER SELECTOR === */
+.folder-selector {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.folder-option {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  user-select: none;
+}
+
+.folder-option.selected {
+  background: rgba(167,139,250,0.2);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.folder-edit-name {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  outline: none;
+  width: 100px;
+  margin-top: 4px;
+}
+
+.folder-config {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+}
+
+/* === BUTTONS === */
+.btn {
+  padding: 14px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: linear-gradient(135deg, rgba(167,139,250,0.7), rgba(244,114,182,0.7));
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(167,139,250,0.3);
+}
+
+.btn-danger {
+  background: rgba(248,113,113,0.2);
+  color: var(--danger);
+  border: 1px solid rgba(248,113,113,0.3);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-row .btn { flex: 1; }
+
+/* === VIEW SCREEN === */
+.view-content {
+  font-size: 1.05rem;
+  line-height: 2;
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+}
+
+.view-content .poem-view-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.view-content .poem-view-author {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.view-content .poem-view-text {
+  padding: 16px 0;
+  border-top: 1px solid var(--glass-border);
+}
+
+.view-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.view-actions .btn { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 12px; }
+
+/* === EMOJI PICKER === */
+.emoji-picker {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 280px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  z-index: 10;
+}
+
+.emoji-picker.show { display: block; }
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.emoji-grid span {
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  text-align: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.emoji-grid span:active { background: rgba(255,255,255,0.15); }
+
+/* === MODAL === */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 300;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.show { display: flex; }
+
+.modal-content {
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 24px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+/* === TOAST === */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  z-index: 400;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* === CONFIRM DIALOG === */
+.confirm-dialog {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 350;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.confirm-dialog.show { display: flex; }
+
+.confirm-box {
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+
+.confirm-box p {
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.confirm-box .btn-row { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header glass">
+  <h1><span>✒️</span> Поэтический Блокнот</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Поиск по названию...">
+    <button class="filter-toggle" id="filterBtn" onclick="toggleFilters()">☰</button>
+  </div>
+  <div class="filters-panel glass" id="filtersPanel">
+    <div class="filter-chip date-chip">
+      📅 <input type="date" id="filterDate">
+    </div>
+    <div class="filter-chip" id="filterAll" onclick="filterByTag('all')">Все</div>
+    <div id="filterTags"></div>
+    <div id="filterFolders"></div>
+  </div>
+</div>
+
+<!-- POEMS LIST -->
+<div class="poems-list" id="poemsList"></div>
+
+<!-- FAB -->
+<button class="fab" onclick="openCreate()">＋</button>
+
+<!-- CREATE / EDIT SCREEN -->
+<div class="screen" id="editorScreen">
+  <div class="screen-header glass">
+    <button class="back-btn" onclick="closeEditor()">←</button>
+    <h2 id="editorTitle">Новый стих</h2>
+  </div>
+  <div class="screen-body">
+    <div class="form-group">
+      <label>Название</label>
+      <input type="text" class="form-input" id="poemTitleInput" placeholder="Введите название...">
+    </div>
+    <div class="form-group">
+      <label>Автор</label>
+      <input type="text" class="form-input" id="poemAuthorInput" placeholder="Ваше имя или псевдоним...">
+    </div>
+    <div class="form-group">
+      <label>Стихотворение</label>
+      <div class="editor-wrapper">
+        <div class="editor-toolbar">
+          <button onclick="execCmd('bold')" title="Жирный"><b>Ж</b></button>
+          <button onclick="execCmd('italic')" title="Курсив"><i>К</i></button>
+          <button onclick="execCmd('underline')" title="Подчёркнутый"><u>П</u></button>
+          <button class="color-btn" title="Цвет текста">🎨<input type="color" id="textColorPicker" value="#ffffff" onchange="execCmdVal('foreColor',this.value)"></button>
+          <button onclick="toggleEmojiPicker()" title="Эмодзи" style="position:relative">😊
+            <div class="emoji-picker glass" id="emojiPicker">
+              <div class="emoji-grid" id="emojiGrid"></div>
+            </div>
+          </button>
+        </div>
+        <div class="editor-area" id="poemContent" contenteditable="true"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Теги</label>
+      <div class="tags-editor" id="tagsEditor">
+        <button class="add-tag-btn" onclick="addTag()">+ Добавить тег</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Папка</label>
+      <div class="folder-selector" id="folderSelector"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeEditor()">Отмена</button>
+      <button class="btn btn-primary" onclick="savePoem()">💾 Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW SCREEN -->
+<div class="screen" id="viewScreen">
+  <div class="screen-header glass">
+    <button class="back-btn" onclick="closeView()">←</button>
+    <h2>Просмотр</h2>
+  </div>
+  <div class="screen-body">
+    <div class="view-content" id="viewContent"></div>
+    <div class="view-actions" id="viewActions"></div>
+  </div>
+</div>
+
+<!-- TRANSFER MODAL -->
+<div class="modal-overlay" id="transferModal">
+  <div class="modal-content glass-heavy">
+    <div class="modal-title">📂 Перенести в папку</div>
+    <div class="folder-selector" id="transferFolders" style="margin-bottom:16px"></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeTransfer()">Отмена</button>
+      <button class="btn btn-primary" onclick="confirmTransfer()">Перенести</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-dialog" id="confirmDialog">
+  <div class="confirm-box glass-heavy">
+    <p id="confirmText">Удалить стих?</p>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Отмена</button>
+      <button class="btn btn-danger" id="confirmBtn">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast glass" id="toast"></div>
+
+<script>
+// ==================== DATA ====================
+const STORAGE_KEY = 'poetry_notebook_data';
+const MAX_FOLDERS = 5;
+
+const DEFAULT_FOLDERS = [
+  { id: 'f1', name: '📁 Избранное', color: '#a78bfa' },
+  { id: 'f2', name: '📁 Черновики', color: '#6ee7b7' },
+  { id: 'f3', name: '📁 Лирика', color: '#f472b6' },
+  { id: 'f4', name: '📁 Философия', color: '#fbbf24' },
+  { id: 'f5', name: '📁 Другое', color: '#60a5fa' }
+];
+
+const EMOJIS = ['❤️','🌹','🌙','✨','💫','🦋','🌸','🍂','🌊','🔥','💜','🕊️','🌿','⭐','💧','🎭','📖','🖋️','🌅','🌌','🎵','💔','🌺','☀️','🍃','❄️','🌈','🎶','💭','🪶'];
+
+let data = loadData();
+let editingId = null;
+let viewingId = null;
+let transferId = null;
+let currentTags = [];
+let selectedFolder = 'f1';
+let activeFilterTag = null;
+let activeFilterFolder = null;
+
+function loadData() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (d && d.poems && d.folders) return d;
+  } catch(e) {}
+  return { poems: [], folders: JSON.parse(JSON.stringify(DEFAULT_FOLDERS)) };
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+// ==================== RENDER ====================
+function renderPoems() {
+  const list = document.getElementById('poemsList');
+  let poems = [...data.poems].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+  // Filters
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  const filterDate = document.getElementById('filterDate').value;
+
+  if (search) {
+    poems = poems.filter(p =>
+      p.title.toLowerCase().includes(search) ||
+      p.author.toLowerCase().includes(search) ||
+      stripHtml(p.content).toLowerCase().includes(search)
+    );
+  }
+
+  if (filterDate) {
+    poems = poems.filter(p => p.createdAt.startsWith(filterDate));
+  }
+
+  if (activeFilterTag) {
+    poems = poems.filter(p => p.tags.some(t => t.name === activeFilterTag));
+  }
+
+  if (activeFilterFolder) {
+    poems = poems.filter(p => p.folder === activeFilterFolder);
+  }
+
+  if (poems.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">📝</div>
+        <p>${search || activeFilterTag || activeFilterFolder ? 'Ничего не найдено' : 'Пока нет стихов. Создайте первый!'}</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = poems.map(p => {
+    const folder = data.folders.find(f => f.id === p.folder);
+    const date = new Date(p.updatedAt || p.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'short', year:'numeric' });
+    const preview = stripHtml(p.content).slice(0, 120);
+    return `
+      <div class="poem-card glass" onclick="openView('${p.id}')">
+        <div class="folder-badge">${folder ? folder.name : '📁 Без папки'}</div>
+        <div class="poem-title">${escHtml(p.title || 'Без названия')}</div>
+        <div class="poem-author">${escHtml(p.author || 'Аноним')}</div>
+        <div class="poem-date">${date}</div>
+        <div class="poem-preview">${escHtml(preview)}</div>
+        <div class="tags-row">
+          ${p.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderFilterTags() {
+  const allTags = new Set();
+  data.poems.forEach(p => p.tags.forEach(t => allTags.add(t.name)));
+  const container = document.getElementById('filterTags');
+  container.innerHTML = Array.from(allTags).map(t =>
+    `<div class="filter-chip ${activeFilterTag === t ? 'active' : ''}" onclick="filterByTag('${escHtml(t)}')">${escHtml(t)}</div>`
+  ).join('');
+}
+
+function renderFilterFolders() {
+  const container = document.getElementById('filterFolders');
+  container.innerHTML = data.folders.map(f =>
+    `<div class="filter-chip ${activeFilterFolder === f.id ? 'active' : ''}" onclick="filterByFolder('${f.id}')">${f.name}</div>`
+  ).join('');
+}
+
+function renderFolderSelector() {
+  const container = document.getElementById('folderSelector');
+  container.innerHTML = data.folders.map(f =>
+    `<div class="folder-option ${selectedFolder === f.id ? 'selected' : ''}" onclick="selectFolder('${f.id}')">${f.name}</div>`
+  ).join('');
+}
+
+function renderTagsEditor() {
+  const container = document.getElementById('tagsEditor');
+  container.innerHTML = currentTags.map((t, i) => `
+    <span class="tag-badge" style="background:${t.color}">
+      ${escHtml(t.name)}
+      <button class="tag-remove" onclick="removeTag(${i})">✕</button>
+    </span>
+  `).join('') + `<button class="add-tag-btn" onclick="addTag()">+ Добавить тег</button>`;
+}
+
+function renderEmojiPicker() {
+  document.getElementById('emojiGrid').innerHTML = EMOJIS.map(e =>
+    `<span onclick="insertEmoji('${e}')">${e}</span>`
+  ).join('');
+}
+
+// ==================== ACTIONS ====================
+function toggleFilters() {
+  const panel = document.getElementById('filtersPanel');
+  const btn = document.getElementById('filterBtn');
+  panel.classList.toggle('show');
+  btn.classList.toggle('active');
+}
+
+function filterByTag(tag) {
+  if (tag === 'all') {
+    activeFilterTag = null;
+  } else {
+    activeFilterTag = activeFilterTag === tag ? null : tag;
+  }
+  activeFilterFolder = null;
+  renderFilterTags();
+  renderFilterFolders();
+  renderPoems();
+}
+
+function filterByFolder(fid) {
+  activeFilterFolder = activeFilterFolder === fid ? null : fid;
+  activeFilterTag = null;
+  renderFilterTags();
+  renderFilterFolders();
+  renderPoems();
+}
+
+function selectFolder(fid) {
+  selectedFolder = fid;
+  renderFolderSelector();
+}
+
+function addTag() {
+  const name = prompt('Название тега:');
+  if (!name || !name.trim()) return;
+  const colors = ['#a78bfa','#6ee7b7','#f472b6','#fbbf24','#60a5fa','#f87171','#34d399','#fb923c','#818cf8','#e879f9'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  currentTags.push({ name: name.trim(), color });
+  renderTagsEditor();
+}
+
+function removeTag(idx) {
+  currentTags.splice(idx, 1);
+  renderTagsEditor();
+}
+
+function openCreate() {
+  editingId = null;
+  document.getElementById('editorTitle').textContent = 'Новый стих';
+  document.getElementById('poemTitleInput').value = '';
+  document.getElementById('poemAuthorInput').value = '';
+  document.getElementById('poemContent').innerHTML = '';
+  currentTags = [];
+  selectedFolder = 'f1';
+  renderTagsEditor();
+  renderFolderSelector();
+  document.getElementById('editorScreen').classList.add('active');
+}
+
+function openEdit(id) {
+  const poem = data.poems.find(p => p.id === id);
+  if (!poem) return;
+  editingId = id;
+  document.getElementById('editorTitle').textContent = 'Редактировать';
+  document.getElementById('poemTitleInput').value = poem.title;
+  document.getElementById('poemAuthorInput').value = poem.author;
+  document.getElementById('poemContent').innerHTML = poem.content;
+  currentTags = JSON.parse(JSON.stringify(poem.tags));
+  selectedFolder = poem.folder || 'f1';
+  renderTagsEditor();
+  renderFolderSelector();
+  closeView();
+  document.getElementById('editorScreen').classList.add('active');
+}
+
+function closeEditor() {
+  document.getElementById('editorScreen').classList.remove('active');
+}
+
+function savePoem() {
+  const title = document.getElementById('poemTitleInput').value.trim();
+  const author = document.getElementById('poemAuthorInput').value.trim();
+  const content = document.getElementById('poemContent').innerHTML;
+
+  if (!title && !content) {
+    showToast('Заполните название или текст');
+    return;
+  }
+
+  const now = new Date().toISOString();
+
+  if (editingId) {
+    const idx = data.poems.findIndex(p => p.id === editingId);
+    if (idx !== -1) {
+      data.poems[idx].title = title || 'Без названия';
+      data.poems[idx].author = author || 'Аноним';
+      data.poems[idx].content = content;
+      data.poems[idx].tags = JSON.parse(JSON.stringify(currentTags));
+      data.poems[idx].folder = selectedFolder;
+      data.poems[idx].updatedAt = now;
+    }
+    showToast('✏️ Стих обновлён');
+  } else {
+    data.poems.push({
+      id: genId(),
+      title: title || 'Без названия',
+      author: author || 'Аноним',
+      content,
+      tags: JSON.parse(JSON.stringify(currentTags)),
+      folder: selectedFolder,
+      createdAt: now,
+      updatedAt: now
+    });
+    showToast('✨ Стих сохранён');
+  }
+
+  saveData();
+  closeEditor();
+  renderAll();
+}
+
+function openView(id) {
+  const poem = data.poems.find(p => p.id === id);
+  if (!poem) return;
+  viewingId = id;
+  const folder = data.folders.find(f => f.id === poem.folder);
+  const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
+
+  document.getElementById('viewContent').innerHTML = `
+    <div class="poem-view-title">${escHtml(poem.title)}</div>
+    <div class="poem-view-author">${escHtml(poem.author)} · ${date}</div>
+    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:16px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
+    ${folder ? `<div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:12px">📁 ${escHtml(folder.name)}</div>` : ''}
+    <div class="poem-view-text">${poem.content}</div>
+  `;
+
+  document.getElementById('viewActions').innerHTML = `
+    <button class="btn btn-primary" onclick="openEdit('${id}')">✏️ Редактировать</button>
+    <button class="btn btn-ghost" onclick="openTransfer('${id}')">📂 Перенести</button>
+    <button class="btn btn-danger" onclick="confirmDelete('${id}')">🗑 Удалить</button>
+  `;
+
+  document.getElementById('viewScreen').classList.add('active');
+}
+
+function closeView() {
+  document.getElementById('viewScreen').classList.remove('active');
+  viewingId = null;
+}
+
+function openTransfer(id) {
+  transferId = id;
+  const container = document.getElementById('transferFolders');
+  const poem = data.poems.find(p => p.id === id);
+  container.innerHTML = data.folders.map(f =>
+    `<div class="folder-option ${f.id === poem?.folder ? 'selected' : ''}" onclick="selectTransferFolder('${f.id}',this)">${f.name}</div>`
+  ).join('');
+  document.getElementById('transferModal').classList.add('show');
+}
+
+function selectTransferFolder(fid, el) {
+  document.querySelectorAll('#transferFolders .folder-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  transferId = transferId; // keep id
+  el.dataset.selected = fid;
+}
+
+function confirmTransfer() {
+  const selected = document.querySelector('#transferFolders .folder-option.selected');
+  if (!selected) { showToast('Выберите папку'); return; }
+
+  // Get folder id from the onclick attribute
+  const fid = selected.getAttribute('onclick').match(/'([^']+)'/)[1];
+  const poem = data.poems.find(p => p.id === transferId);
+  if (poem) {
+    poem.folder = fid;
+    poem.updatedAt = new Date().toISOString();
+    saveData();
+    showToast('📂 Стих перенесён');
+    renderAll();
+  }
+  closeTransfer();
+  if (viewingId) openView(viewingId);
+}
+
+function closeTransfer() {
+  document.getElementById('transferModal').classList.remove('show');
+  transferId = null;
+}
+
+function confirmDelete(id) {
+  const dialog = document.getElementById('confirmDialog');
+  document.getElementById('confirmText').textContent = 'Удалить этот стих? Это действие нельзя отменить.';
+  document.getElementById('confirmBtn').onclick = () => {
+    data.poems = data.poems.filter(p => p.id !== id);
+    saveData();
+    closeConfirm();
+    closeView();
+    renderAll();
+    showToast('🗑 Стих удалён');
+  };
+  dialog.classList.add('show');
+}
+
+function closeConfirm() {
+  document.getElementById('confirmDialog').classList.remove('show');
+}
+
+// ==================== EDITOR COMMANDS ====================
+function execCmd(cmd) {
+  document.execCommand(cmd, false, null);
+  document.getElementById('poemContent').focus();
+}
+
+function execCmdVal(cmd, val) {
+  document.execCommand(cmd, false, val);
+  document.getElementById('poemContent').focus();
+}
+
+function toggleEmojiPicker() {
+  document.getElementById('emojiPicker').classList.toggle('show');
+}
+
+function insertEmoji(emoji) {
+  document.getElementById('poemContent').focus();
+  document.execCommand('insertText', false, emoji);
+  document.getElementById('emojiPicker').classList.remove('show');
+}
+
+// ==================== UTILS ====================
+function escHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || '';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function renderAll() {
+  renderPoems();
+  renderFilterTags();
+  renderFilterFolders();
+}
+
+// ==================== EVENTS ====================
+document.getElementById('searchInput').addEventListener('input', renderPoems);
+document.getElementById('filterDate').addEventListener('change', renderPoems);
+
+// Close emoji picker on outside click
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.editor-toolbar')) {
+    document.getElementById('emojiPicker').classList.remove('show');
+  }
+});
+
+// Close modal on overlay click
+document.getElementById('transferModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('transferModal')) closeTransfer();
+});
+
+document.getElementById('confirmDialog').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('confirmDialog')) closeConfirm();
+});
+
+// ==================== INIT ====================
+renderAll();
+renderEmojiPicker();
+
+// ==================== PWA SERVICE WORKER ====================
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 <meta name="theme-color" content="rgba(20,20,40,0.8)">
 <title>Поэтический Блокнот</title>
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+<link rel="icon" href="image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
 <style>
 :root {
   --glass-bg: rgba(255,255,255,0.08);
@@ -530,6 +530,7 @@ body::before {
 }
 
 .folder-option {
+  position: relative;
   padding: 10px 16px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
@@ -539,6 +540,9 @@ body::before {
   cursor: pointer;
   transition: all 0.3s;
   user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .folder-option.selected {
@@ -547,23 +551,62 @@ body::before {
   color: var(--text);
 }
 
-.folder-edit-name {
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border: 1px solid var(--glass-border);
-  border-radius: 6px;
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  outline: none;
-  width: 100px;
-  margin-top: 4px;
+.folder-option:hover .folder-actions {
+  display: flex;
 }
 
-.folder-config {
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.04);
+.folder-actions {
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  gap: 2px;
+}
+
+.folder-action-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(255,255,255,0.1);
+  color: var(--text);
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.folder-action-btn:hover {
+  background: rgba(248,113,113,0.3);
+  color: var(--danger);
+}
+
+.folder-option.selected .folder-actions {
+  display: none;
+}
+
+.add-folder-btn {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--glass-border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  justify-content: center;
+}
+
+.add-folder-btn:active {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* === BUTTONS === */
@@ -638,6 +681,103 @@ body::before {
 }
 
 .view-actions .btn { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 12px; }
+
+/* === FONT SIZE SLIDER === */
+.font-size-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.03);
+}
+
+.font-size-control label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.font-size-control input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+.font-size-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.font-size-control .size-value {
+  font-size: 0.75rem;
+  color: var(--accent);
+  min-width: 36px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* === COMPACT VIEW === */
+.view-screen-compact .screen-header {
+  padding: 10px 12px;
+  min-height: 48px;
+}
+
+.view-screen-compact .screen-body {
+  padding: 12px;
+}
+
+.view-screen-compact .view-content {
+  font-size: 1rem;
+  line-height: 1.9;
+  margin-bottom: 12px;
+}
+
+.view-screen-compact .poem-view-title {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.view-screen-compact .poem-view-author {
+  font-size: 0.8rem;
+  margin-bottom: 12px;
+}
+
+.view-screen-compact .poem-view-text {
+  padding: 10px 0;
+}
+
+/* === EXPORT BUTTON === */
+.export-btn {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s;
+  margin-bottom: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.export-btn:active {
+  background: rgba(167,139,250,0.2);
+  border-color: var(--accent);
+}
 
 /* === EMOJI PICKER === */
 .emoji-picker {
@@ -829,6 +969,7 @@ body::before {
     <div class="form-group">
       <label>Папка</label>
       <div class="folder-selector" id="folderSelector"></div>
+      <button class="add-folder-btn" onclick="openCreateFolder()" style="margin-top:8px">➕ Новая папка</button>
     </div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeEditor()">Отмена</button>
@@ -843,7 +984,18 @@ body::before {
     <button class="back-btn" onclick="closeView()">←</button>
     <h2>Просмотр</h2>
   </div>
+  
+  <!-- Font Size Control -->
+  <div class="font-size-control glass">
+    <label>🔤 Шрифт</label>
+    <input type="range" id="fontSizeSlider" min="14" max="28" value="18" oninput="updateFontSize(this.value)">
+    <span class="size-value" id="fontSizeValue">18px</span>
+  </div>
+  
   <div class="screen-body">
+    <!-- Export Button -->
+    <button class="export-btn" onclick="exportToJSON()">📥 Экспорт JSON</button>
+    
     <div class="view-content" id="viewContent"></div>
     <div class="view-actions" id="viewActions"></div>
   </div>
@@ -857,6 +1009,25 @@ body::before {
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeTransfer()">Отмена</button>
       <button class="btn btn-primary" onclick="confirmTransfer()">Перенести</button>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE FOLDER MODAL -->
+<div class="modal-overlay" id="createFolderModal">
+  <div class="modal-content glass-heavy">
+    <div class="modal-title">📁 Новая папка</div>
+    <div class="form-group">
+      <label>Название</label>
+      <input type="text" class="form-input" id="newFolderName" placeholder="Например: 🌙 Ночные стихи" maxlength="30">
+    </div>
+    <div class="form-group">
+      <label>Цвет</label>
+      <input type="color" id="newFolderColor" value="#a78bfa" style="width:60px;height:40px;border:none;border-radius:8px;cursor:pointer">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeCreateFolder()">Отмена</button>
+      <button class="btn btn-primary" onclick="saveNewFolder()">Создать</button>
     </div>
   </div>
 </div>
@@ -878,7 +1049,8 @@ body::before {
 <script>
 // ==================== DATA ====================
 const STORAGE_KEY = 'poetry_notebook_data';
-const MAX_FOLDERS = 5;
+const MAX_FOLDERS = 10;
+const USER_FOLDER_PREFIX = 'user_';
 
 const DEFAULT_FOLDERS = [
   { id: 'f1', name: '📁 Избранное', color: '#a78bfa' },
@@ -888,7 +1060,14 @@ const DEFAULT_FOLDERS = [
   { id: 'f5', name: '📁 Другое', color: '#60a5fa' }
 ];
 
-const EMOJIS = ['❤️','🌹','🌙','✨','💫','🦋','🌸','🍂','🌊','🔥','💜','🕊️','🌿','⭐','💧','🎭','📖','🖋️','🌅','🌌','🎵','💔','🌺','☀️','🍃','❄️','🌈','🎶','💭','🪶'];
+const EMOJIS = [
+  '❤️','🧡','💛','💚','💙','💜','🖤','🤍','💔','❣️','💕','💞','💓','💗','💖','💘','💝',
+  '🌹','🌸','🌺','🌻','🌼','🌷','💐','🌾','🍀','🌿','🍃','🍂','🍁','❄️','🌨️','☃️',
+  '🌙','🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘','🌚','🌝','✨','⭐','🌟','💫','⚡','🔥',
+  '💧','☔','☁️','🌤️','⛅','🌥️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','🐝','🐞','🦋',
+  '📝','📖','📚','🔖','✒️','🖋️','🖊️','🎨','🎭','🎵','🎶','🎼','💭','💬','🗨️','🗯️',
+  '🪶','🪷','🪻','🌊','🏔️','🏕️','🌌','🌃','🌆','🌇','🌄','🌅','☄️','🌠','🎇','🎆'
+];
 
 let data = loadData();
 let editingId = null;
@@ -920,7 +1099,6 @@ function renderPoems() {
   const list = document.getElementById('poemsList');
   let poems = [...data.poems].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
 
-  // Filters
   const search = document.getElementById('searchInput').value.toLowerCase().trim();
   const filterDate = document.getElementById('filterDate').value;
 
@@ -989,8 +1167,33 @@ function renderFilterFolders() {
 
 function renderFolderSelector() {
   const container = document.getElementById('folderSelector');
+  container.innerHTML = data.folders.map(f => {
+    const isUser = f.isUser || f.id.startsWith(USER_FOLDER_PREFIX);
+    return `
+      <div class="folder-option ${selectedFolder === f.id ? 'selected' : ''}" 
+           onclick="selectFolder('${f.id}')"
+           style="border-left: 3px solid ${f.color}">
+        ${escHtml(f.name)}
+        ${isUser ? `
+          <div class="folder-actions">
+            <button class="folder-action-btn" onclick="event.stopPropagation(); editFolder('${f.id}')" title="Редактировать">✏️</button>
+            <button class="folder-action-btn" onclick="event.stopPropagation(); deleteFolder('${f.id}')" title="Удалить">🗑</button>
+          </div>
+        ` : ''}
+      </div>`;
+  }).join('') + 
+  `<button class="add-folder-btn" onclick="openCreateFolder()" style="margin-top:8px">➕ Создать папку</button>`;
+}
+
+function renderTransferFolders() {
+  const container = document.getElementById('transferFolders');
+  const poem = data.poems.find(p => p.id === transferId);
   container.innerHTML = data.folders.map(f =>
-    `<div class="folder-option ${selectedFolder === f.id ? 'selected' : ''}" onclick="selectFolder('${f.id}')">${f.name}</div>`
+    `<div class="folder-option ${f.id === poem?.folder ? 'selected' : ''}" 
+         onclick="selectTransferFolder('${f.id}',this)"
+         style="border-left: 3px solid ${f.color}">
+      ${escHtml(f.name)}
+    </div>`
   ).join('');
 }
 
@@ -1055,6 +1258,80 @@ function addTag() {
 function removeTag(idx) {
   currentTags.splice(idx, 1);
   renderTagsEditor();
+}
+
+// === FOLDER MANAGEMENT ===
+function openCreateFolder() {
+  document.getElementById('newFolderName').value = '';
+  document.getElementById('newFolderColor').value = '#a78bfa';
+  document.getElementById('createFolderModal').classList.add('show');
+  setTimeout(() => document.getElementById('newFolderName').focus(), 100);
+}
+
+function closeCreateFolder() {
+  document.getElementById('createFolderModal').classList.remove('show');
+}
+
+function saveNewFolder() {
+  const name = document.getElementById('newFolderName').value.trim();
+  const color = document.getElementById('newFolderColor').value;
+  
+  if (!name) {
+    showToast('Введите название папки');
+    return;
+  }
+  
+  if (data.folders.length >= MAX_FOLDERS) {
+    showToast(`Максимум ${MAX_FOLDERS} папок`);
+    return;
+  }
+  
+  const newFolder = {
+    id: USER_FOLDER_PREFIX + genId(),
+    name: name,
+    color: color,
+    isUser: true
+  };
+  
+  data.folders.push(newFolder);
+  saveData();
+  closeCreateFolder();
+  
+  selectedFolder = newFolder.id;
+  renderFolderSelector();
+  showToast('✨ Папка создана');
+}
+
+function editFolder(fid, el) {
+  const folder = data.folders.find(f => f.id === fid);
+  if (!folder || !folder.isUser) return;
+  
+  const currentName = folder.name;
+  const newName = prompt('Изменить название папки:', currentName);
+  if (newName && newName.trim() && newName !== currentName) {
+    folder.name = newName.trim();
+    saveData();
+    renderAll();
+    showToast('✏️ Папка обновлена');
+  }
+}
+
+function deleteFolder(fid) {
+  const folder = data.folders.find(f => f.id === fid);
+  if (!folder || !folder.isUser) return;
+  
+  const poemsInFolder = data.poems.filter(p => p.folder === fid).length;
+  if (poemsInFolder > 0) {
+    showToast(`Сначала перенесите ${poemsInFolder} стих(ов) из папки`);
+    return;
+  }
+  
+  if (confirm(`Удалить папку "${folder.name}"?`)) {
+    data.folders = data.folders.filter(f => f.id !== fid);
+    saveData();
+    renderAll();
+    showToast('🗑 Папка удалена');
+  }
 }
 
 function openCreate() {
@@ -1139,13 +1416,18 @@ function openView(id) {
   const folder = data.folders.find(f => f.id === poem.folder);
   const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
 
+  document.getElementById('viewScreen').classList.add('view-screen-compact');
+
   document.getElementById('viewContent').innerHTML = `
     <div class="poem-view-title">${escHtml(poem.title)}</div>
     <div class="poem-view-author">${escHtml(poem.author)} · ${date}</div>
-    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:16px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
-    ${folder ? `<div style="font-size:0.8rem;color:var(--text-dim);margin-bottom:12px">📁 ${escHtml(folder.name)}</div>` : ''}
-    <div class="poem-view-text">${poem.content}</div>
+    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:12px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
+    ${folder ? `<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:8px">📁 ${escHtml(folder.name)}</div>` : ''}
+    <div class="poem-view-text" id="poemTextContent">${poem.content}</div>
   `;
+
+  const savedSize = loadFontSize();
+  updateFontSize(savedSize);
 
   document.getElementById('viewActions').innerHTML = `
     <button class="btn btn-primary" onclick="openEdit('${id}')">✏️ Редактировать</button>
@@ -1158,31 +1440,25 @@ function openView(id) {
 
 function closeView() {
   document.getElementById('viewScreen').classList.remove('active');
+  document.getElementById('viewScreen').classList.remove('view-screen-compact');
   viewingId = null;
 }
 
 function openTransfer(id) {
   transferId = id;
-  const container = document.getElementById('transferFolders');
-  const poem = data.poems.find(p => p.id === id);
-  container.innerHTML = data.folders.map(f =>
-    `<div class="folder-option ${f.id === poem?.folder ? 'selected' : ''}" onclick="selectTransferFolder('${f.id}',this)">${f.name}</div>`
-  ).join('');
+  renderTransferFolders();
   document.getElementById('transferModal').classList.add('show');
 }
 
 function selectTransferFolder(fid, el) {
   document.querySelectorAll('#transferFolders .folder-option').forEach(e => e.classList.remove('selected'));
   el.classList.add('selected');
-  transferId = transferId; // keep id
-  el.dataset.selected = fid;
 }
 
 function confirmTransfer() {
   const selected = document.querySelector('#transferFolders .folder-option.selected');
   if (!selected) { showToast('Выберите папку'); return; }
 
-  // Get folder id from the onclick attribute
   const fid = selected.getAttribute('onclick').match(/'([^']+)'/)[1];
   const poem = data.poems.find(p => p.id === transferId);
   if (poem) {
@@ -1240,6 +1516,48 @@ function insertEmoji(emoji) {
   document.getElementById('emojiPicker').classList.remove('show');
 }
 
+// ==================== FONT SIZE & EXPORT ====================
+function updateFontSize(px) {
+  const content = document.getElementById('viewContent');
+  const textElement = content?.querySelector('.poem-view-text');
+  if (textElement) {
+    textElement.style.fontSize = px + 'px';
+  }
+  document.getElementById('fontSizeValue').textContent = px + 'px';
+  localStorage.setItem('poetry_font_size', px);
+}
+
+function loadFontSize() {
+  const saved = localStorage.getItem('poetry_font_size');
+  if (saved) {
+    document.getElementById('fontSizeSlider').value = saved;
+    document.getElementById('fontSizeValue').textContent = saved + 'px';
+    return saved;
+  }
+  return '18';
+}
+
+function exportToJSON() {
+  const exportData = {
+    app: 'Поэтический Блокнот',
+    version: '1.1',
+    exportedAt: new Date().toISOString(),
+    folders: data.folders,
+    poems: data.poems
+  };
+  
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `poetry-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('📦 Экспорт завершён');
+}
+
 // ==================== UTILS ====================
 function escHtml(str) {
   const div = document.createElement('div');
@@ -1264,20 +1582,19 @@ function renderAll() {
   renderPoems();
   renderFilterTags();
   renderFilterFolders();
+  renderFolderSelector();
 }
 
 // ==================== EVENTS ====================
 document.getElementById('searchInput').addEventListener('input', renderPoems);
 document.getElementById('filterDate').addEventListener('change', renderPoems);
 
-// Close emoji picker on outside click
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.editor-toolbar')) {
     document.getElementById('emojiPicker').classList.remove('show');
   }
 });
 
-// Close modal on overlay click
 document.getElementById('transferModal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('transferModal')) closeTransfer();
 });
@@ -1286,9 +1603,23 @@ document.getElementById('confirmDialog').addEventListener('click', (e) => {
   if (e.target === document.getElementById('confirmDialog')) closeConfirm();
 });
 
+document.getElementById('createFolderModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('createFolderModal')) closeCreateFolder();
+});
+
 // ==================== INIT ====================
-renderAll();
-renderEmojiPicker();
+function init() {
+  renderAll();
+  renderEmojiPicker();
+  
+  const savedSize = localStorage.getItem('poetry_font_size');
+  if (savedSize && document.getElementById('fontSizeSlider')) {
+    document.getElementById('fontSizeSlider').value = savedSize;
+    document.getElementById('fontSizeValue').textContent = savedSize + 'px';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
 
 // ==================== PWA SERVICE WORKER ====================
 if ('serviceWorker' in navigator) {

@@ -700,27 +700,46 @@ body::before {
 
 /* === VIEW SCREEN - COMPACT === */
 .view-content {
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   white-space: pre-wrap;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .view-content .poem-view-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+  line-height: 1.3;
 }
 
-.view-content .poem-view-author {
-  font-size: 0.75rem;
+.view-content .poem-view-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.view-content .poem-view-tags {
+  margin-bottom: 6px;
+}
+
+.view-content .poem-view-folder {
+  font-size: 0.65rem;
   color: var(--text-dim);
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .view-content .poem-view-text {
-  padding: 10px 0;
+  padding: 8px 0;
   border-top: 1px solid var(--glass-border);
+  line-height: 1.6;
 }
 
 .view-actions {
@@ -729,28 +748,28 @@ body::before {
   flex-wrap: wrap;
 }
 
-.view-actions .btn { flex: 1; min-width: 80px; font-size: 0.8rem; padding: 10px; }
+.view-actions .btn { flex: 1; min-width: 80px; font-size: 0.75rem; padding: 8px; }
 
 /* === DATA BUTTONS === */
 .data-buttons {
   display: flex;
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .data-btn {
   flex: 1;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   transition: all 0.3s;
 }
 
@@ -1046,11 +1065,11 @@ const DEFAULT_FOLDERS = [];
 
 const EMOJIS = [
   '❤️','🧡','💛','💚','💙','💜','🖤','🤍','💔','❣️','💕','💞','💓','💗','💖','💘','💝',
-  '🌹','','🌺','','🌼','','💐','','🍀','','🍃','','🍁','❄️','🌨️','☃️',
-  '🌙','🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘','🌚','🌝','✨','⭐','🌟','','⚡','',
-  '','☔','☁️','🌤️','','🌥️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','','🐞','',
-  '','📖','','🔖','️','🖋️','🖊️','🎨','🎭','🎵','🎶','🎼','💭','💬','🗨️','🗯️',
-  '🪶','🪷','','🌊','️','🏕️','🌌','🌃','🌆','🌇','🌄','🌅','☄️','🌠','🎇','🎆'
+  '🌹','🌸','🌺','🌻','🌼','🌷','💐','🌾','🍀','🌿','🍃','🍂','🍁','❄️','🌨️','☃️',
+  '🌙','','🌒','','🌔','','🌖','','🌘','','🌝','✨','⭐','🌟','','⚡','',
+  '','☔','☁️','🌤️','⛅','🌥️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','🐝','🐞','🦋',
+  '📝','','📚','','✒️','️','🖊️','🎨','🎭','🎵','🎶','🎼','💭','💬','🗨️','🗯️',
+  '🪶','🪷','','🌊','️','🏕️','🌌','🌃','🌆','🌇','🌄','🌅','☄️','🌠','🎇',''
 ];
 
 let data = loadData();
@@ -1425,9 +1444,13 @@ function openView(id) {
 
   document.getElementById('viewContent').innerHTML = `
     <div class="poem-view-title">${escHtml(poem.title)}</div>
-    <div class="poem-view-author">${escHtml(poem.author)} · ${date}</div>
-    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:8px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
-    ${folder ? `<div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:6px">📁 ${escHtml(folder.name)}</div>` : ''}
+    <div class="poem-view-meta">
+      <span>${escHtml(poem.author || 'Аноним')}</span>
+      <span>·</span>
+      <span>${date}</span>
+    </div>
+    ${poem.tags.length ? `<div class="poem-view-tags"><div class="tags-row">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div></div>` : ''}
+    ${folder ? `<div class="poem-view-folder">📁 ${escHtml(folder.name)}</div>` : ''}
     <div class="poem-view-text">${poem.content}</div>
   `;
 

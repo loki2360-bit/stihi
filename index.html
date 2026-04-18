@@ -77,24 +77,24 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 16px;
+  padding: 12px 16px;
   border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .header h1 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 700;
   background: linear-gradient(135deg, var(--accent), var(--accent3));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.header h1 span { font-size: 1.6rem; -webkit-text-fill-color: initial; }
+.header h1 span { font-size: 1.5rem; -webkit-text-fill-color: initial; }
 
 /* === SEARCH & FILTERS === */
 .search-bar {
@@ -105,12 +105,12 @@ body::before {
 
 .search-bar input {
   flex: 1;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   outline: none;
   transition: all 0.3s;
 }
@@ -124,12 +124,12 @@ body::before {
 .search-bar input::placeholder { color: var(--text-dim); }
 
 .filter-toggle {
-  width: 46px; height: 46px;
+  width: 42px; height: 42px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -145,8 +145,8 @@ body::before {
 .filters-panel {
   display: none;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px;
+  gap: 6px;
+  padding: 10px;
   border-radius: var(--radius-sm);
   margin-bottom: 8px;
 }
@@ -154,9 +154,9 @@ body::before {
 .filters-panel.show { display: flex; }
 
 .filter-chip {
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   cursor: pointer;
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.06);
@@ -196,11 +196,11 @@ body::before {
   padding: 8px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .poem-card {
-  padding: 16px;
+  padding: 14px;
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.3s;
@@ -220,9 +220,9 @@ body::before {
 .poem-card:active { transform: scale(0.98); }
 
 .poem-card .poem-title {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -230,40 +230,40 @@ body::before {
 }
 
 .poem-card .poem-author {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .poem-card .poem-date {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-dim);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .poem-card .poem-preview {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: rgba(240,240,240,0.7);
-  line-height: 1.5;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .tags-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 
 .tag-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 2px 8px;
   border-radius: 12px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #fff;
   text-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -272,11 +272,11 @@ body::before {
 
 .folder-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 0.7rem;
-  padding: 3px 8px;
-  border-radius: 8px;
+  top: 10px;
+  right: 10px;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 6px;
   background: rgba(255,255,255,0.08);
   border: 1px solid var(--glass-border);
   color: var(--text-dim);
@@ -284,26 +284,26 @@ body::before {
 
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 50px 20px;
   color: var(--text-dim);
 }
 
-.empty-state .emoji { font-size: 3rem; margin-bottom: 12px; }
+.empty-state .emoji { font-size: 2.5rem; margin-bottom: 10px; }
 
 /* === FAB === */
 .fab {
   position: fixed;
-  bottom: 24px;
+  bottom: 20px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.25);
   background: linear-gradient(135deg, rgba(167,139,250,0.6), rgba(244,114,182,0.6));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -339,18 +339,18 @@ body::before {
 .screen-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  gap: 10px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--glass-border);
 }
 
 .screen-header .back-btn {
-  width: 40px; height: 40px;
-  border-radius: 12px;
+  width: 36px; height: 36px;
+  border-radius: 10px;
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -359,35 +359,35 @@ body::before {
 
 .screen-header h2 {
   flex: 1;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .screen-body {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  padding: 12px 16px;
 }
 
 /* === EDITOR === */
-.form-group { margin-bottom: 16px; }
+.form-group { margin-bottom: 14px; }
 
 .form-group label {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   font-weight: 500;
 }
 
 .form-input {
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 1rem;
+  font-size: 0.95rem;
   outline: none;
   transition: all 0.3s;
   font-family: inherit;
@@ -397,6 +397,55 @@ body::before {
   background: rgba(255,255,255,0.1);
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+}
+
+/* Font Size Control - Glass Style */
+.font-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  margin-bottom: 14px;
+}
+
+.font-size-control label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.font-size-control input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  outline: none;
+}
+
+.font-size-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.8);
+  box-shadow: 0 2px 8px rgba(167,139,250,0.4);
+}
+
+.font-size-control .size-value {
+  font-size: 0.7rem;
+  color: var(--accent);
+  min-width: 32px;
+  text-align: center;
+  font-weight: 600;
 }
 
 /* Rich text editor */
@@ -409,19 +458,19 @@ body::before {
 
 .editor-toolbar {
   display: flex;
-  gap: 4px;
-  padding: 8px;
+  gap: 3px;
+  padding: 6px;
   border-bottom: 1px solid var(--glass-border);
   flex-wrap: wrap;
 }
 
 .editor-toolbar button {
-  width: 36px; height: 36px;
-  border-radius: 8px;
+  width: 32px; height: 32px;
+  border-radius: 6px;
   border: none;
   background: rgba(255,255,255,0.08);
   color: var(--text);
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -444,11 +493,11 @@ body::before {
 }
 
 .editor-area {
-  min-height: 250px;
-  padding: 16px;
+  min-height: 200px;
+  padding: 14px;
   outline: none;
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.7;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   color: var(--text);
@@ -463,7 +512,7 @@ body::before {
 .tags-editor {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
@@ -475,18 +524,18 @@ body::before {
 
 .tag-input-row input[type="text"] {
   flex: 1;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   outline: none;
   min-width: 80px;
 }
 
 .tag-input-row input[type="color"] {
-  width: 36px; height: 36px;
+  width: 32px; height: 32px;
   border: 2px solid var(--glass-border);
   border-radius: 50%;
   background: transparent;
@@ -499,7 +548,7 @@ body::before {
   border: none;
   color: var(--text-dim);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 0 0 0 4px;
   line-height: 1;
 }
@@ -507,12 +556,12 @@ body::before {
 .tag-remove:active { color: var(--danger); }
 
 .add-tag-btn {
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 20px;
   border: 1px dashed var(--glass-border);
   background: transparent;
   color: var(--text-dim);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -525,24 +574,24 @@ body::before {
 /* === FOLDER SELECTOR === */
 .folder-selector {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .folder-option {
   position: relative;
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.06);
   color: var(--text-dim);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.3s;
   user-select: none;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .folder-option.selected {
@@ -558,20 +607,20 @@ body::before {
 .folder-actions {
   display: none;
   position: absolute;
-  right: 8px;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
   gap: 2px;
 }
 
 .folder-action-btn {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 4px;
   border: none;
   background: rgba(255,255,255,0.1);
   color: var(--text);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -589,12 +638,12 @@ body::before {
 }
 
 .add-folder-btn {
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
   border: 1px dashed var(--glass-border);
   background: transparent;
   color: var(--text-dim);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
@@ -602,6 +651,7 @@ body::before {
   gap: 4px;
   width: 100%;
   justify-content: center;
+  margin-top: 6px;
 }
 
 .add-folder-btn:active {
@@ -611,10 +661,10 @@ body::before {
 
 /* === BUTTONS === */
 .btn {
-  padding: 14px 24px;
+  padding: 12px 20px;
   border-radius: var(--radius-sm);
   border: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -643,133 +693,59 @@ body::before {
 
 .btn-row {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .btn-row .btn { flex: 1; }
 
-/* === VIEW SCREEN === */
+/* === VIEW SCREEN - COMPACT === */
 .view-content {
-  font-size: 1.05rem;
-  line-height: 2;
+  font-size: 0.95rem;
+  line-height: 1.8;
   white-space: pre-wrap;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .view-content .poem-view-title {
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .view-content .poem-view-author {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-dim);
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .view-content .poem-view-text {
-  padding: 16px 0;
+  padding: 12px 0;
   border-top: 1px solid var(--glass-border);
 }
 
 .view-actions {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
-.view-actions .btn { flex: 1; min-width: 80px; font-size: 0.85rem; padding: 12px; }
-
-/* === FONT SIZE SLIDER === */
-.font-size-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--glass-border);
-  background: rgba(255,255,255,0.03);
-}
-
-.font-size-control label {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  white-space: nowrap;
-}
-
-.font-size-control input[type="range"] {
-  flex: 1;
-  height: 4px;
-  -webkit-appearance: none;
-  background: rgba(255,255,255,0.1);
-  border-radius: 2px;
-  outline: none;
-}
-
-.font-size-control input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--accent);
-  cursor: pointer;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.font-size-control .size-value {
-  font-size: 0.75rem;
-  color: var(--accent);
-  min-width: 36px;
-  text-align: center;
-  font-weight: 600;
-}
-
-/* === COMPACT VIEW === */
-.view-screen-compact .screen-header {
-  padding: 10px 12px;
-  min-height: 48px;
-}
-
-.view-screen-compact .screen-body {
-  padding: 12px;
-}
-
-.view-screen-compact .view-content {
-  font-size: 1rem;
-  line-height: 1.9;
-  margin-bottom: 12px;
-}
-
-.view-screen-compact .poem-view-title {
-  font-size: 1.2rem;
-  margin-bottom: 2px;
-}
-
-.view-screen-compact .poem-view-author {
-  font-size: 0.8rem;
-  margin-bottom: 12px;
-}
-
-.view-screen-compact .poem-view-text {
-  padding: 10px 0;
-}
+.view-actions .btn { flex: 1; min-width: 80px; font-size: 0.8rem; padding: 10px; }
 
 /* === EXPORT BUTTON === */
 .export-btn {
-  padding: 10px 16px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--glass-border);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   transition: all 0.3s;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   width: 100%;
   justify-content: center;
 }
@@ -785,29 +761,29 @@ body::before {
   position: absolute;
   bottom: 100%;
   left: 0;
-  width: 280px;
-  max-height: 200px;
+  width: 260px;
+  max-height: 180px;
   overflow-y: auto;
-  padding: 12px;
+  padding: 10px;
   border-radius: var(--radius-sm);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   z-index: 10;
 }
 
-.emoji-picker.show { display: block; }
+.emoji-picker.show { display: grid; }
 
 .emoji-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 3px;
 }
 
 .emoji-grid span {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 3px;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 5px;
   transition: background 0.2s;
 }
 
@@ -831,7 +807,7 @@ body::before {
   width: 100%;
   max-width: 500px;
   border-radius: var(--radius) var(--radius) 0 0;
-  padding: 24px;
+  padding: 20px;
   animation: slideUp 0.3s ease;
 }
 
@@ -841,9 +817,9 @@ body::before {
 }
 
 .modal-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 /* === SCROLLBAR === */
@@ -854,12 +830,12 @@ body::before {
 /* === TOAST === */
 .toast {
   position: fixed;
-  bottom: 100px;
+  bottom: 90px;
   left: 50%;
   transform: translateX(-50%) translateY(100px);
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   z-index: 400;
   opacity: 0;
   transition: all 0.3s;
@@ -890,13 +866,13 @@ body::before {
   width: 100%;
   max-width: 320px;
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 20px;
   text-align: center;
 }
 
 .confirm-box p {
-  margin-bottom: 20px;
-  font-size: 0.95rem;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
@@ -909,7 +885,7 @@ body::before {
 <div class="header glass">
   <h1><span>✒️</span> Поэтический Блокнот</h1>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Поиск по названию...">
+    <input type="text" id="searchInput" placeholder="Поиск...">
     <button class="filter-toggle" id="filterBtn" onclick="toggleFilters()">☰</button>
   </div>
   <div class="filters-panel glass" id="filtersPanel">
@@ -941,8 +917,16 @@ body::before {
     </div>
     <div class="form-group">
       <label>Автор</label>
-      <input type="text" class="form-input" id="poemAuthorInput" placeholder="Ваше имя или псевдоним...">
+      <input type="text" class="form-input" id="poemAuthorInput" placeholder="Ваше имя...">
     </div>
+    
+    <!-- Font Size Control - Glass Style -->
+    <div class="font-size-control">
+      <label>🔤 Шрифт</label>
+      <input type="range" id="fontSizeSlider" min="12" max="24" value="16" oninput="updateEditorFontSize(this.value)">
+      <span class="size-value" id="fontSizeValue">16px</span>
+    </div>
+    
     <div class="form-group">
       <label>Стихотворение</label>
       <div class="editor-wrapper">
@@ -951,11 +935,10 @@ body::before {
           <button onclick="execCmd('italic')" title="Курсив"><i>К</i></button>
           <button onclick="execCmd('underline')" title="Подчёркнутый"><u>П</u></button>
           <button class="color-btn" title="Цвет текста">🎨<input type="color" id="textColorPicker" value="#ffffff" onchange="execCmdVal('foreColor',this.value)"></button>
-          <button onclick="toggleEmojiPicker()" title="Эмодзи" style="position:relative">😊
-            <div class="emoji-picker glass" id="emojiPicker">
-              <div class="emoji-grid" id="emojiGrid"></div>
-            </div>
-          </button>
+          <button onclick="toggleEmojiPicker()" title="Эмодзи" style="position:relative">😊</button>
+        </div>
+        <div class="emoji-picker glass" id="emojiPicker">
+          <div class="emoji-grid" id="emojiGrid"></div>
         </div>
         <div class="editor-area" id="poemContent" contenteditable="true"></div>
       </div>
@@ -963,13 +946,13 @@ body::before {
     <div class="form-group">
       <label>Теги</label>
       <div class="tags-editor" id="tagsEditor">
-        <button class="add-tag-btn" onclick="addTag()">+ Добавить тег</button>
+        <button class="add-tag-btn" onclick="addTag()">+ Тег</button>
       </div>
     </div>
     <div class="form-group">
       <label>Папка</label>
       <div class="folder-selector" id="folderSelector"></div>
-      <button class="add-folder-btn" onclick="openCreateFolder()" style="margin-top:8px">➕ Новая папка</button>
+      <button class="add-folder-btn" onclick="openCreateFolder()">➕ Новая папка</button>
     </div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeEditor()">Отмена</button>
@@ -985,13 +968,6 @@ body::before {
     <h2>Просмотр</h2>
   </div>
   
-  <!-- Font Size Control -->
-  <div class="font-size-control glass">
-    <label>🔤 Шрифт</label>
-    <input type="range" id="fontSizeSlider" min="14" max="28" value="18" oninput="updateFontSize(this.value)">
-    <span class="size-value" id="fontSizeValue">18px</span>
-  </div>
-  
   <div class="screen-body">
     <!-- Export Button -->
     <button class="export-btn" onclick="exportToJSON()">📥 Экспорт JSON</button>
@@ -1005,7 +981,7 @@ body::before {
 <div class="modal-overlay" id="transferModal">
   <div class="modal-content glass-heavy">
     <div class="modal-title">📂 Перенести в папку</div>
-    <div class="folder-selector" id="transferFolders" style="margin-bottom:16px"></div>
+    <div class="folder-selector" id="transferFolders" style="margin-bottom:14px"></div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeTransfer()">Отмена</button>
       <button class="btn btn-primary" onclick="confirmTransfer()">Перенести</button>
@@ -1023,7 +999,7 @@ body::before {
     </div>
     <div class="form-group">
       <label>Цвет</label>
-      <input type="color" id="newFolderColor" value="#a78bfa" style="width:60px;height:40px;border:none;border-radius:8px;cursor:pointer">
+      <input type="color" id="newFolderColor" value="#a78bfa" style="width:60px;height:36px;border:none;border-radius:8px;cursor:pointer">
     </div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeCreateFolder()">Отмена</button>
@@ -1061,12 +1037,12 @@ const DEFAULT_FOLDERS = [
 ];
 
 const EMOJIS = [
-  '❤️','🧡','💛','💚','💙','💜','🖤','🤍','💔','❣️','💕','💞','💓','💗','💖','💘','💝',
-  '🌹','🌸','🌺','🌻','🌼','🌷','💐','🌾','🍀','🌿','🍃','🍂','🍁','❄️','🌨️','☃️',
-  '🌙','🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘','🌚','🌝','✨','⭐','🌟','💫','⚡','🔥',
-  '💧','☔','☁️','🌤️','⛅','🌥️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','🐝','🐞','🦋',
-  '📝','📖','📚','🔖','✒️','🖋️','🖊️','🎨','🎭','🎵','🎶','🎼','💭','💬','🗨️','🗯️',
-  '🪶','🪷','🪻','🌊','🏔️','🏕️','🌌','🌃','🌆','🌇','🌄','🌅','☄️','🌠','🎇','🎆'
+  '❤️','🧡','','💚','💙','💜','🖤','','💔','️','💕','💞','💓','💗','💖','💘','💝',
+  '🌹','🌸','🌺','🌻','🌼','🌷','💐','🌾','🍀','🌿','🍃','','🍁','❄️','🌨️','☃️',
+  '🌙','','🌒','','🌔','','🌖','','🌘','','🌝','✨','⭐','🌟','','⚡','',
+  '','☔','☁️','🌤️','⛅','️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','','🐞',
+  '📝','','📚','','✒️','️','🖊️','🎨','','🎵','','🎼','','💬','🗨️',
+  '🪶','','🪻','🌊','🏔️','🏕️','','🌃','','🌇','','🌅','️','🌠','🎇','🎆'
 ];
 
 let data = loadData();
@@ -1182,7 +1158,7 @@ function renderFolderSelector() {
         ` : ''}
       </div>`;
   }).join('') + 
-  `<button class="add-folder-btn" onclick="openCreateFolder()" style="margin-top:8px">➕ Создать папку</button>`;
+  `<button class="add-folder-btn" onclick="openCreateFolder()" style="margin-top:6px">➕ Создать папку</button>`;
 }
 
 function renderTransferFolders() {
@@ -1204,7 +1180,7 @@ function renderTagsEditor() {
       ${escHtml(t.name)}
       <button class="tag-remove" onclick="removeTag(${i})">✕</button>
     </span>
-  `).join('') + `<button class="add-tag-btn" onclick="addTag()">+ Добавить тег</button>`;
+  `).join('') + `<button class="add-tag-btn" onclick="addTag()">+ Тег</button>`;
 }
 
 function renderEmojiPicker() {
@@ -1344,6 +1320,13 @@ function openCreate() {
   selectedFolder = 'f1';
   renderTagsEditor();
   renderFolderSelector();
+  
+  // Load saved font size
+  const savedSize = localStorage.getItem('poetry_editor_font_size') || '16';
+  document.getElementById('fontSizeSlider').value = savedSize;
+  document.getElementById('fontSizeValue').textContent = savedSize + 'px';
+  updateEditorFontSize(savedSize);
+  
   document.getElementById('editorScreen').classList.add('active');
 }
 
@@ -1359,6 +1342,13 @@ function openEdit(id) {
   selectedFolder = poem.folder || 'f1';
   renderTagsEditor();
   renderFolderSelector();
+  
+  // Load saved font size
+  const savedSize = localStorage.getItem('poetry_editor_font_size') || '16';
+  document.getElementById('fontSizeSlider').value = savedSize;
+  document.getElementById('fontSizeValue').textContent = savedSize + 'px';
+  updateEditorFontSize(savedSize);
+  
   closeView();
   document.getElementById('editorScreen').classList.add('active');
 }
@@ -1416,18 +1406,13 @@ function openView(id) {
   const folder = data.folders.find(f => f.id === poem.folder);
   const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
 
-  document.getElementById('viewScreen').classList.add('view-screen-compact');
-
   document.getElementById('viewContent').innerHTML = `
     <div class="poem-view-title">${escHtml(poem.title)}</div>
     <div class="poem-view-author">${escHtml(poem.author)} · ${date}</div>
-    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:12px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
-    ${folder ? `<div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:8px">📁 ${escHtml(folder.name)}</div>` : ''}
-    <div class="poem-view-text" id="poemTextContent">${poem.content}</div>
+    ${poem.tags.length ? `<div class="tags-row" style="margin-bottom:10px">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div>` : ''}
+    ${folder ? `<div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:6px">📁 ${escHtml(folder.name)}</div>` : ''}
+    <div class="poem-view-text">${poem.content}</div>
   `;
-
-  const savedSize = loadFontSize();
-  updateFontSize(savedSize);
 
   document.getElementById('viewActions').innerHTML = `
     <button class="btn btn-primary" onclick="openEdit('${id}')">✏️ Редактировать</button>
@@ -1440,7 +1425,6 @@ function openView(id) {
 
 function closeView() {
   document.getElementById('viewScreen').classList.remove('active');
-  document.getElementById('viewScreen').classList.remove('view-screen-compact');
   viewingId = null;
 }
 
@@ -1507,36 +1491,28 @@ function execCmdVal(cmd, val) {
 }
 
 function toggleEmojiPicker() {
-  document.getElementById('emojiPicker').classList.toggle('show');
+  const picker = document.getElementById('emojiPicker');
+  picker.classList.toggle('show');
 }
 
 function insertEmoji(emoji) {
-  document.getElementById('poemContent').focus();
+  const editor = document.getElementById('poemContent');
+  editor.focus();
   document.execCommand('insertText', false, emoji);
   document.getElementById('emojiPicker').classList.remove('show');
 }
 
-// ==================== FONT SIZE & EXPORT ====================
-function updateFontSize(px) {
-  const content = document.getElementById('viewContent');
-  const textElement = content?.querySelector('.poem-view-text');
-  if (textElement) {
-    textElement.style.fontSize = px + 'px';
+// ==================== FONT SIZE ====================
+function updateEditorFontSize(px) {
+  const editor = document.getElementById('poemContent');
+  if (editor) {
+    editor.style.fontSize = px + 'px';
   }
   document.getElementById('fontSizeValue').textContent = px + 'px';
-  localStorage.setItem('poetry_font_size', px);
+  localStorage.setItem('poetry_editor_font_size', px);
 }
 
-function loadFontSize() {
-  const saved = localStorage.getItem('poetry_font_size');
-  if (saved) {
-    document.getElementById('fontSizeSlider').value = saved;
-    document.getElementById('fontSizeValue').textContent = saved + 'px';
-    return saved;
-  }
-  return '18';
-}
-
+// ==================== EXPORT ====================
 function exportToJSON() {
   const exportData = {
     app: 'Поэтический Блокнот',
@@ -1589,9 +1565,12 @@ function renderAll() {
 document.getElementById('searchInput').addEventListener('input', renderPoems);
 document.getElementById('filterDate').addEventListener('change', renderPoems);
 
+// Close emoji picker on outside click
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.editor-toolbar')) {
-    document.getElementById('emojiPicker').classList.remove('show');
+  const picker = document.getElementById('emojiPicker');
+  const btn = e.target.closest('button[onclick="toggleEmojiPicker()"]');
+  if (!btn && !e.target.closest('.emoji-picker')) {
+    picker.classList.remove('show');
   }
 });
 
@@ -1611,12 +1590,6 @@ document.getElementById('createFolderModal').addEventListener('click', (e) => {
 function init() {
   renderAll();
   renderEmojiPicker();
-  
-  const savedSize = localStorage.getItem('poetry_font_size');
-  if (savedSize && document.getElementById('fontSizeSlider')) {
-    document.getElementById('fontSizeSlider').value = savedSize;
-    document.getElementById('fontSizeValue').textContent = savedSize + 'px';
-  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

@@ -280,7 +280,7 @@ body::before {
 
 .empty-state .emoji { font-size: 2.5rem; margin-bottom: 10px; }
 
-/* === НОВЫЕ СТИЛИ ДЛЯ КНОПОК В РЯД === */
+/* === КНОПКИ В РЯД === */
 .fab-container {
   position: fixed;
   bottom: 20px;
@@ -320,15 +320,17 @@ body::before {
   box-shadow: 0 8px 32px rgba(110,231,183,0.3);
 }
 
-/* === СТИЛЬ ДЛЯ ПОДПИСИ АВТОРА === */
+/* === КОМПАКТНАЯ ПОДПИСЬ АВТОРА === */
 .poem-signature {
   display: block;
-  margin-top: 4px !important;
-  padding-top: 2px !important;
-  font-style: italic;
-  opacity: 0.75;
-  font-size: 0.85em;
+  margin-top: -2px !important;
+  padding-top: 0 !important;
+  margin-bottom: 4px !important;
+  line-height: 1.1;
+  font-size: 0.8em;
   text-align: right;
+  opacity: 0.75;
+  font-style: italic;
 }
 
 .screen {
@@ -702,30 +704,32 @@ body::before {
 
 .btn-row .btn { flex: 1; }
 
+/* === КОМПАКТНЫЙ ПРОСМОТР === */
 .view-content {
   font-size: 0.9rem;
   line-height: 1.5;
   white-space: pre-wrap;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 
 .view-content .poem-view-title {
   font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
   line-height: 1.3;
 }
 
 .view-content .poem-view-text {
-  padding: 8px 0;
-  border-top: 1px solid var(--glass-border);
-  line-height: 1.6;
+  padding: 4px 0 0 0;
+  line-height: 1.4;
 }
 
 .view-actions {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
+  margin-top: 2px;
+  padding-top: 0;
 }
 
 .view-actions .btn { flex: 1; min-width: 80px; font-size: 0.75rem; padding: 8px; }
@@ -980,7 +984,7 @@ body::before {
 <!-- POEMS LIST -->
 <div class="poems-list" id="poemsList"></div>
 
-<!-- FAB CONTAINER (в один ряд) -->
+<!-- FAB CONTAINER -->
 <div class="fab-container">
   <button class="fab fab-sm" onclick="openSettings()" title="Настройки">⚙️</button>
   <button class="fab fab-sm" onclick="quickBackup()" title="Быстрый бэкап">💾</button>
@@ -1425,7 +1429,6 @@ function renderPoems() {
     const folder = data.folders.find(f => f.id === p.folder);
     const date = new Date(p.updatedAt || p.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
     const preview = stripHtml(p.content).slice(0, 120);
-    // Убираем название, если оно пустое
     const titleHtml = p.title ? `<div class="poem-title">${escHtml(p.title)}</div>` : '';
     
     return `
@@ -1601,7 +1604,7 @@ function openCreate() {
   if (data.folders.length === 0) { showToast('Сначала создайте папку'); openCreateFolder(); return; }
   editingId = null;
   document.getElementById('editorTitle').textContent = 'Новый стих';
-  document.getElementById('poemTitleInput').value = ''; // Пустое поле по умолчанию
+  document.getElementById('poemTitleInput').value = '';
   document.getElementById('poemContent').innerHTML = '';
   currentTags = [];
   selectedFolder = data.folders[0].id;
@@ -1620,7 +1623,6 @@ function openEdit(id) {
   document.getElementById('editorTitle').textContent = 'Редактировать';
   document.getElementById('poemTitleInput').value = poem.title;
   let content = poem.content;
-  // Удаляем подпись перед редактированием
   content = content.replace(/<br\s*\/?>\s*<span class="poem-signature">Шихова З<\/span>\s*$/gi, '');
   document.getElementById('poemContent').innerHTML = content;
   currentTags = JSON.parse(JSON.stringify(poem.tags));
@@ -1645,7 +1647,6 @@ async function savePoem() {
     return;
   }
 
-  // Добавляем подпись с уменьшенным отступом
   content = content + '<br><span class="poem-signature">Шихова З</span>';
 
   const now = new Date().toISOString();
@@ -1653,7 +1654,7 @@ async function savePoem() {
   if (editingId) {
     const idx = data.poems.findIndex(p => p.id === editingId);
     if (idx !== -1) {
-      data.poems[idx].title = title; // Сохраняем как есть, даже если пустой
+      data.poems[idx].title = title;
       data.poems[idx].content = content;
       data.poems[idx].tags = JSON.parse(JSON.stringify(currentTags));
       data.poems[idx].folder = selectedFolder;
@@ -1663,7 +1664,7 @@ async function savePoem() {
   } else {
     data.poems.push({
       id: genId(),
-      title: title, // Пустое название разрешено
+      title: title,
       content,
       tags: JSON.parse(JSON.stringify(currentTags)),
       folder: selectedFolder,
@@ -1683,7 +1684,6 @@ function openView(id) {
   if (!poem) return;
   viewingId = id;
   currentViewingPoemId = id;
-  const folder = data.folders.find(f => f.id === poem.folder);
   const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 
   document.getElementById('viewContent').innerHTML = `

@@ -55,7 +55,6 @@ body::before {
   100% { transform: translate(-5%,3%) rotate(5deg); }
 }
 
-/* === GLASS MIXIN === */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
@@ -71,6 +70,28 @@ body::before {
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 8px 32px var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.15);
 }
+
+/* === STORAGE STATUS BAR === */
+.storage-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.02);
+}
+
+.storage-bar .status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.storage-bar .status-dot.ok { background: #34d399; }
+.storage-bar .status-dot.warn { background: #fbbf24; }
 
 /* === HEADER === */
 .header {
@@ -96,7 +117,6 @@ body::before {
 
 .header h1 span { font-size: 1.5rem; -webkit-text-fill-color: initial; }
 
-/* === SEARCH & FILTERS === */
 .search-bar {
   display: flex;
   gap: 8px;
@@ -191,7 +211,6 @@ body::before {
   opacity: 0.6;
 }
 
-/* === POEM CARDS === */
 .poems-list {
   padding: 8px 16px;
   display: flex;
@@ -290,7 +309,6 @@ body::before {
 
 .empty-state .emoji { font-size: 2.5rem; margin-bottom: 10px; }
 
-/* === FAB === */
 .fab {
   position: fixed;
   bottom: 20px;
@@ -315,7 +333,21 @@ body::before {
 
 .fab:active { transform: scale(0.9); }
 
-/* === SCREENS === */
+.fab-secondary {
+  bottom: 90px;
+  background: linear-gradient(135deg, rgba(110,231,183,0.6), rgba(96,165,250,0.6));
+  box-shadow: 0 8px 32px rgba(110,231,183,0.3);
+  font-size: 1.3rem;
+}
+
+.fab-settings {
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, rgba(110,231,183,0.6), rgba(96,165,250,0.6));
+  box-shadow: 0 8px 32px rgba(110,231,183,0.3);
+  font-size: 1.3rem;
+}
+
 .screen {
   position: fixed;
   top: 0; left: 0;
@@ -369,7 +401,6 @@ body::before {
   padding: 12px 16px;
 }
 
-/* === EDITOR === */
 .form-group { margin-bottom: 14px; }
 
 .form-group label {
@@ -399,7 +430,6 @@ body::before {
   box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
 }
 
-/* Font Size Control - Glass Style */
 .font-size-control {
   display: flex;
   align-items: center;
@@ -448,7 +478,6 @@ body::before {
   font-weight: 600;
 }
 
-/* Rich text editor */
 .editor-wrapper {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
@@ -508,39 +537,46 @@ body::before {
   color: var(--text-dim);
 }
 
-/* === TAGS EDITOR === */
+/* === TEXT COLOR PICKER POPUP === */
+.color-picker-popup {
+  position: absolute;
+  display: none;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  z-index: 1000;
+  box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+.color-picker-popup.show {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-width: 200px;
+}
+
+.color-picker-popup .color-option {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-picker-popup .color-option:hover {
+  transform: scale(1.1);
+  border-color: #fff;
+}
+
 .tags-editor {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-}
-
-.tag-input-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.tag-input-row input[type="text"] {
-  flex: 1;
-  padding: 6px 10px;
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
-  font-size: 0.8rem;
-  outline: none;
-  min-width: 80px;
-}
-
-.tag-input-row input[type="color"] {
-  width: 32px; height: 32px;
-  border: 2px solid var(--glass-border);
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  padding: 2px;
 }
 
 .tag-remove {
@@ -571,7 +607,6 @@ body::before {
   color: var(--accent);
 }
 
-/* === FOLDER SELECTOR === */
 .folder-selector {
   display: flex;
   gap: 6px;
@@ -658,7 +693,6 @@ body::before {
   color: var(--accent);
 }
 
-/* === BUTTONS === */
 .btn {
   padding: 12px 20px;
   border-radius: var(--radius-sm);
@@ -698,7 +732,6 @@ body::before {
 
 .btn-row .btn { flex: 1; }
 
-/* === VIEW SCREEN - COMPACT === */
 .view-content {
   font-size: 0.9rem;
   line-height: 1.5;
@@ -723,19 +756,6 @@ body::before {
   flex-wrap: wrap;
 }
 
-.view-content .poem-view-tags {
-  margin-bottom: 6px;
-}
-
-.view-content .poem-view-folder {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .view-content .poem-view-text {
   padding: 8px 0;
   border-top: 1px solid var(--glass-border);
@@ -750,11 +770,11 @@ body::before {
 
 .view-actions .btn { flex: 1; min-width: 80px; font-size: 0.75rem; padding: 8px; }
 
-/* === DATA BUTTONS === */
 .data-buttons {
   display: flex;
   gap: 6px;
   margin-bottom: 8px;
+  flex-wrap: wrap;
 }
 
 .data-btn {
@@ -771,6 +791,7 @@ body::before {
   justify-content: center;
   gap: 4px;
   transition: all 0.3s;
+  min-width: 0;
 }
 
 .data-btn:active {
@@ -778,12 +799,8 @@ body::before {
   border-color: var(--accent);
 }
 
-/* Hidden file input */
-#importInput {
-  display: none;
-}
+#importInput { display: none; }
 
-/* === EMOJI PICKER === */
 .emoji-picker {
   display: none;
   position: absolute;
@@ -817,7 +834,6 @@ body::before {
 
 .emoji-grid span:active { background: rgba(255,255,255,0.15); }
 
-/* === MODAL === */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -850,12 +866,10 @@ body::before {
   margin-bottom: 14px;
 }
 
-/* === SCROLLBAR === */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
 
-/* === TOAST === */
 .toast {
   position: fixed;
   bottom: 90px;
@@ -875,7 +889,6 @@ body::before {
   transform: translateX(-50%) translateY(0);
 }
 
-/* === CONFIRM DIALOG === */
 .confirm-dialog {
   position: fixed;
   top: 0; left: 0;
@@ -905,6 +918,85 @@ body::before {
 }
 
 .confirm-box .btn-row { margin-top: 0; }
+
+/* === SETTINGS SCREEN === */
+.settings-section {
+  margin-bottom: 20px;
+}
+
+.settings-section h3 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 8px;
+}
+
+.setting-item .setting-info {
+  flex: 1;
+}
+
+.setting-item .setting-info .setting-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.setting-item .setting-info .setting-desc {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.setting-item .setting-action .btn {
+  padding: 8px 14px;
+  font-size: 0.75rem;
+}
+
+.storage-info-bar {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  margin-bottom: 8px;
+}
+
+.storage-info-bar .storage-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.storage-info-bar .storage-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.storage-info-bar .storage-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s;
+}
+
+.storage-info-bar .storage-details {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+}
 </style>
 </head>
 <body>
@@ -929,8 +1021,14 @@ body::before {
 <!-- POEMS LIST -->
 <div class="poems-list" id="poemsList"></div>
 
-<!-- FAB -->
+<!-- FAB - Create New -->
 <button class="fab" onclick="openCreate()">＋</button>
+
+<!-- FAB - Quick Backup -->
+<button class="fab fab-secondary" onclick="quickBackup()" title="Быстрый бэкап">💾</button>
+
+<!-- FAB - Settings -->
+<button class="fab fab-settings" onclick="openSettings()">⚙️</button>
 
 <!-- CREATE / EDIT SCREEN -->
 <div class="screen" id="editorScreen">
@@ -948,7 +1046,6 @@ body::before {
       <input type="text" class="form-input" id="poemAuthorInput" placeholder="Ваше имя...">
     </div>
     
-    <!-- Font Size Control - Glass Style -->
     <div class="font-size-control">
       <label>🔤 Шрифт</label>
       <input type="range" id="fontSizeSlider" min="12" max="24" value="16" oninput="updateEditorFontSize(this.value)">
@@ -957,18 +1054,28 @@ body::before {
     
     <div class="form-group">
       <label>Стихотворение</label>
-      <div class="editor-wrapper">
+      <div class="editor-wrapper" style="position:relative">
         <div class="editor-toolbar">
           <button onclick="execCmd('bold')" title="Жирный"><b>Ж</b></button>
           <button onclick="execCmd('italic')" title="Курсив"><i>К</i></button>
           <button onclick="execCmd('underline')" title="Подчёркнутый"><u>П</u></button>
-          <button class="color-btn" title="Цвет текста">🎨<input type="color" id="textColorPicker" value="#ffffff" onchange="execCmdVal('foreColor',this.value)"></button>
           <button onclick="toggleEmojiPicker()" title="Эмодзи" style="position:relative">😊</button>
         </div>
         <div class="emoji-picker glass" id="emojiPicker">
           <div class="emoji-grid" id="emojiGrid"></div>
         </div>
         <div class="editor-area" id="poemContent" contenteditable="true"></div>
+        <!-- Color Picker Popup -->
+        <div class="color-picker-popup glass" id="colorPickerPopup">
+          <div class="color-option" style="background:#ffffff" onclick="applyTextColor('#ffffff')"></div>
+          <div class="color-option" style="background:#f87171" onclick="applyTextColor('#f87171')"></div>
+          <div class="color-option" style="background:#fbbf24" onclick="applyTextColor('#fbbf24')"></div>
+          <div class="color-option" style="background:#34d399" onclick="applyTextColor('#34d399')"></div>
+          <div class="color-option" style="background:#60a5fa" onclick="applyTextColor('#60a5fa')"></div>
+          <div class="color-option" style="background:#a78bfa" onclick="applyTextColor('#a78bfa')"></div>
+          <div class="color-option" style="background:#f472b6" onclick="applyTextColor('#f472b6')"></div>
+          <div class="color-option" style="background:#6ee7b7" onclick="applyTextColor('#6ee7b7')"></div>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -997,15 +1104,110 @@ body::before {
   </div>
   
   <div class="screen-body">
-    <!-- Export/Import Buttons -->
+    <!-- Font Size Control for View -->
+    <div class="font-size-control">
+      <label>🔤 Шрифт</label>
+      <input type="range" id="viewFontSizeSlider" min="14" max="28" value="18" oninput="updateViewFontSize(this.value)">
+      <span class="size-value" id="viewFontSizeValue">18px</span>
+    </div>
+    
     <div class="data-buttons">
-      <button class="data-btn" onclick="exportToJSON()">📥 Экспорт</button>
-      <button class="data-btn" onclick="document.getElementById('importInput').click()">📤 Импорт</button>
+      <button class="data-btn" onclick="copyPoemText()">📋 Копировать</button>
+      <button class="data-btn" onclick="loadFromFile()">📂 Импорт</button>
+      <button class="data-btn" onclick="exportToJSON()">📤 Экспорт</button>
     </div>
     <input type="file" id="importInput" accept=".json" onchange="importFromJSON(this)">
     
     <div class="view-content" id="viewContent"></div>
     <div class="view-actions" id="viewActions"></div>
+  </div>
+</div>
+
+<!-- SETTINGS SCREEN -->
+<div class="screen" id="settingsScreen">
+  <div class="screen-header glass">
+    <button class="back-btn" onclick="closeSettings()">←</button>
+    <h2>⚙️ Настройки хранения</h2>
+  </div>
+  <div class="screen-body">
+    <div class="storage-info-bar" id="storageInfo"></div>
+    
+    <div class="settings-section">
+      <h3>🗄️ Локальное хранилище</h3>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Запросить постоянное хранилище</div>
+          <div class="setting-desc">Данные не будут удалены при очистке кэша</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-primary" onclick="requestPersistentStorage()">Включить</button>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Статус хранилища</div>
+          <div class="setting-desc" id="storageStatus">Загрузка...</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3>📁 Файловая система</h3>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Сохранить на устройство</div>
+          <div class="setting-desc">Создать файл с данными на устройстве (Chrome/Android)</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-ghost" onclick="saveToFile()">Сохранить</button>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Открыть файл данных</div>
+          <div class="setting-desc">Загрузить данные из JSON файла</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-ghost" onclick="loadFromFile()">Открыть</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-section">
+      <h3>📤 Бэкап</h3>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Экспорт в JSON</div>
+          <div class="setting-desc">Скачать все данные как файл</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-ghost" onclick="exportToJSON()">Экспорт</button>
+        </div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title">Импорт из JSON</div>
+          <div class="setting-desc">Загрузить данные из файла (заменит текущие)</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-ghost" onclick="document.getElementById('importSettingsInput').click()">Импорт</button>
+        </div>
+      </div>
+      <input type="file" id="importSettingsInput" accept=".json" onchange="importFromJSON(this)" style="display:none">
+    </div>
+    
+    <div class="settings-section">
+      <h3>🗑️ Опасная зона</h3>
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-title" style="color:var(--danger)">Удалить все данные</div>
+          <div class="setting-desc">Это действие нельзя отменить</div>
+        </div>
+        <div class="setting-action">
+          <button class="btn btn-danger" onclick="clearAllData()">Удалить</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1055,46 +1257,325 @@ body::before {
 <div class="toast glass" id="toast"></div>
 
 <script>
-// ==================== DATA ====================
-const STORAGE_KEY = 'poetry_notebook_data';
-const MAX_FOLDERS = 10;
-const USER_FOLDER_PREFIX = 'user_';
+// ==================== IndexedDB STORAGE ====================
+const DB_NAME = 'PoetryNotebookDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'data';
 
-// No default folders - start empty
-const DEFAULT_FOLDERS = [];
-
-const EMOJIS = [
-  '❤️','🧡','💛','💚','💙','💜','🖤','🤍','💔','❣️','💕','💞','💓','💗','💖','💘','💝',
-  '🌹','🌸','🌺','🌻','🌼','🌷','💐','🌾','🍀','🌿','🍃','🍂','🍁','❄️','🌨️','☃️',
-  '🌙','','🌒','','🌔','','🌖','','🌘','','🌝','✨','⭐','🌟','','⚡','',
-  '','☔','☁️','🌤️','⛅','🌥️','☀️','🌈','🦋','🕊️','🦢','🦆','🐦','🐝','🐞','🦋',
-  '📝','','📚','','✒️','️','🖊️','🎨','🎭','🎵','🎶','🎼','💭','💬','🗨️','🗯️',
-  '🪶','🪷','','🌊','️','🏕️','🌌','🌃','🌆','🌇','🌄','🌅','☄️','🌠','🎇',''
-];
-
-let data = loadData();
+let db = null;
+let data = { poems: [], folders: [] };
 let editingId = null;
 let viewingId = null;
 let transferId = null;
 let currentTags = [];
-let selectedFolder = data.folders.length > 0 ? data.folders[0].id : null;
+let selectedFolder = null;
 let activeFilterTag = null;
 let activeFilterFolder = null;
+let currentViewingPoemId = null;
 
-function loadData() {
-  try {
-    const d = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (d && d.poems && d.folders) return d;
-  } catch(e) {}
-  return { poems: [], folders: JSON.parse(JSON.stringify(DEFAULT_FOLDERS)) };
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    
+    request.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains(STORE_NAME)) {
+        database.createObjectStore(STORE_NAME);
+      }
+    };
+    
+    request.onsuccess = (e) => {
+      db = e.target.result;
+      resolve(db);
+    };
+    
+    request.onerror = (e) => {
+      reject(e.target.error);
+    };
+  });
 }
 
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+function dbPut(key, value) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    store.put(value, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function dbGet(key) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+function dbDelete(key) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    const store = tx.objectStore(STORE_NAME);
+    store.delete(key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = (e) => reject(e.target.error);
+  });
+}
+
+// ==================== DATA MANAGEMENT ====================
+async function loadData() {
+  try {
+    await openDB();
+    const stored = await dbGet('appData');
+    if (stored && stored.poems && stored.folders) {
+      data = stored;
+    } else {
+      // Try migrate from localStorage
+      try {
+        const lsData = JSON.parse(localStorage.getItem('poetry_notebook_data'));
+        if (lsData && lsData.poems) {
+          data = lsData;
+          await saveData();
+          localStorage.removeItem('poetry_notebook_data');
+          showToast('✅ Данные перенесены в надежное хранилище');
+        }
+      } catch(e) {}
+    }
+  } catch(e) {
+    console.error('DB Error:', e);
+    // Fallback to localStorage
+    try {
+      const lsData = JSON.parse(localStorage.getItem('poetry_notebook_data'));
+      if (lsData) data = lsData;
+    } catch(e2) {}
+  }
+  
+  if (data.folders.length > 0) {
+    selectedFolder = data.folders[0].id;
+  }
+}
+
+async function saveData() {
+  try {
+    await dbPut('appData', data);
+  } catch(e) {
+    console.error('Save Error:', e);
+    // Fallback
+    try {
+      localStorage.setItem('poetry_notebook_data', JSON.stringify(data));
+    } catch(e2) {}
+  }
+}
+
+async function clearAllData() {
+  if (confirm('Удалить ВСЕ данные? Это нельзя отменить!')) {
+    try {
+      await dbDelete('appData');
+    } catch(e) {}
+    localStorage.removeItem('poetry_notebook_data');
+    data = { poems: [], folders: [] };
+    selectedFolder = null;
+    renderAll();
+    showToast('🗑 Данные удалены');
+  }
 }
 
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+// ==================== PERSISTENT STORAGE ====================
+async function requestPersistentStorage() {
+  if (navigator.storage && navigator.storage.persist) {
+    const granted = await navigator.storage.persist();
+    updateStorageStatus();
+    if (granted) {
+      showToast('✅ Постоянное хранилище включено');
+    } else {
+      showToast('❌ Браузер отказал в доступе');
+    }
+  } else {
+    showToast('❌ Не поддерживается браузером');
+  }
+}
+
+async function checkPersistentStorage() {
+  if (navigator.storage && navigator.storage.persisted) {
+    return await navigator.storage.persisted();
+  }
+  return false;
+}
+
+async function getStorageEstimate() {
+  if (navigator.storage && navigator.storage.estimate) {
+    return await navigator.storage.estimate();
+  }
+  return null;
+}
+
+function formatBytes(bytes) {
+  if (!bytes || bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+async function updateStorageInfo() {
+  const el = document.getElementById('storageInfo');
+  const est = await getStorageEstimate();
+  const persisted = await checkPersistentStorage();
+  
+  const dataSize = JSON.stringify(data).length;
+  
+  let quotaInfo = '';
+  if (est) {
+    const usedPct = est.quota ? ((est.usage / est.quota) * 100).toFixed(1) : 0;
+    const barColor = usedPct > 80 ? 'var(--danger)' : usedPct > 50 ? '#fbbf24' : '#34d399';
+    quotaInfo = `
+      <div class="storage-label">Хранилище устройства</div>
+      <div class="storage-bar-track">
+        <div class="storage-bar-fill" style="width:${usedPct}%;background:${barColor}"></div>
+      </div>
+      <div class="storage-details">Использовано: ${formatBytes(est.usage)} из ${formatBytes(est.quota)}</div>
+    `;
+  }
+  
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <span class="storage-bar ${persisted ? 'status-dot ok' : 'status-dot warn'}"></span>
+      <span style="font-size:0.75rem">${persisted ? 'Постоянное хранилище ✅' : 'Временное хранилище ⚠️'}</span>
+    </div>
+    ${quotaInfo}
+    <div style="margin-top:8px;font-size:0.7rem;color:var(--text-dim)">
+      Размер данных: ${formatBytes(dataSize)} · ${data.poems.length} стих(ов) · ${data.folders.length} папок
+    </div>
+  `;
+}
+
+async function updateStorageStatus() {
+  const el = document.getElementById('storageStatus');
+  const persisted = await checkPersistentStorage();
+  el.textContent = persisted ? '✅ Постоянное — данные защищены' : '⚠️ Временное — может быть очищено';
+  el.style.color = persisted ? '#34d399' : '#fbbf24';
+}
+
+// ==================== FILE SYSTEM API ====================
+async function saveToFile() {
+  if (window.showSaveFilePicker) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: 'poetry-backup-' + new Date().toISOString().slice(0, 10) + '.json',
+        types: [{
+          description: 'JSON файлы',
+          accept: { 'application/json': ['.json'] }
+        }]
+      });
+      
+      const writable = await handle.createWritable();
+      await writable.write(JSON.stringify(data, null, 2));
+      await writable.close();
+      showToast('💾 Файл сохранён на устройство');
+    } catch(e) {
+      if (e.name !== 'AbortError') {
+        console.error(e);
+        fallbackExport();
+      }
+    }
+  } else {
+    fallbackExport();
+  }
+}
+
+async function quickBackup() {
+  // Quick backup - just export to file
+  await saveToFile();
+}
+
+function fallbackExport() {
+  exportToJSON();
+}
+
+async function loadFromFile() {
+  if (window.showOpenFilePicker) {
+    try {
+      const [handle] = await window.showOpenFilePicker({
+        types: [{
+          description: 'JSON файлы',
+          accept: { 'application/json': ['.json'] }
+        }]
+      });
+      
+      const file = await handle.getFile();
+      const text = await file.text();
+      const imported = JSON.parse(text);
+      
+      if (!imported.folders || !imported.poems) {
+        showToast('❌ Неверный формат файла');
+        return;
+      }
+      
+      if (confirm(`Загрузить ${imported.poems.length} стих(ов) и ${imported.folders.length} папок?`)) {
+        data = imported;
+        await saveData();
+        renderAll();
+        showToast('✅ Данные загружены из файла');
+      }
+    } catch(e) {
+      if (e.name !== 'AbortError') {
+        console.error(e);
+        document.getElementById('importInput').click();
+      }
+    }
+  } else {
+    document.getElementById('importInput').click();
+  }
+}
+
+function exportToJSON() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'poetry-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('📤 Экспорт завершён');
+}
+
+function importFromJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      
+      if (!imported.folders || !imported.poems) {
+        showToast('❌ Неверный формат файла');
+        return;
+      }
+      
+      if (confirm(`Импортировать ${imported.poems.length} стих(ов) и ${imported.folders.length} папок? Текущие данные будут заменены.`)) {
+        data.folders = imported.folders.map(f => ({ ...f, isUser: true }));
+        data.poems = imported.poems;
+        await saveData();
+        renderAll();
+        showToast('✅ Импорт завершён');
+      }
+    } catch (err) {
+      showToast('❌ Ошибка чтения файла');
+      console.error(err);
+    }
+    input.value = '';
+  };
+  reader.readAsText(file);
 }
 
 // ==================== RENDER ====================
@@ -1136,7 +1617,7 @@ function renderPoems() {
 
   list.innerHTML = poems.map(p => {
     const folder = data.folders.find(f => f.id === p.folder);
-    const date = new Date(p.updatedAt || p.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'short', year:'numeric' });
+    const date = new Date(p.updatedAt || p.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
     const preview = stripHtml(p.content).slice(0, 120);
     return `
       <div class="poem-card glass" onclick="openView('${p.id}')">
@@ -1155,15 +1636,13 @@ function renderPoems() {
 function renderFilterTags() {
   const allTags = new Set();
   data.poems.forEach(p => p.tags.forEach(t => allTags.add(t.name)));
-  const container = document.getElementById('filterTags');
-  container.innerHTML = Array.from(allTags).map(t =>
+  document.getElementById('filterTags').innerHTML = Array.from(allTags).map(t =>
     `<div class="filter-chip ${activeFilterTag === t ? 'active' : ''}" onclick="filterByTag('${escHtml(t)}')">${escHtml(t)}</div>`
   ).join('');
 }
 
 function renderFilterFolders() {
-  const container = document.getElementById('filterFolders');
-  container.innerHTML = data.folders.map(f =>
+  document.getElementById('filterFolders').innerHTML = data.folders.map(f =>
     `<div class="filter-chip ${activeFilterFolder === f.id ? 'active' : ''}" onclick="filterByFolder('${f.id}')">${f.name}</div>`
   ).join('');
 }
@@ -1175,7 +1654,7 @@ function renderFolderSelector() {
     return;
   }
   container.innerHTML = data.folders.map(f => {
-    const isUser = f.isUser || f.id.startsWith(USER_FOLDER_PREFIX);
+    const isUser = f.isUser || f.id.startsWith('user_');
     return `
       <div class="folder-option ${selectedFolder === f.id ? 'selected' : ''}" 
            onclick="selectFolder('${f.id}')"
@@ -1220,11 +1699,18 @@ function renderEmojiPicker() {
 }
 
 // ==================== ACTIONS ====================
+const EMOJIS = [
+  '❤️', '🧡', '', '💚', '', '💜', '', '🤍', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝',
+  '🌹', '🌸', '🌺', '', '🌼', '🌷', '💐', '', '🍀', '🌿', '🍃', '', '🍁', '❄️', '🌨️', '☃️',
+  '🌙', '', '🌒', '🌓', '🌔', '🌕', '', '🌗', '🌘', '🌚', '', '✨', '⭐', '🌟', '💫', '⚡', '🔥',
+  '💧', '☔', '☁️', '🌤️', '⛅', '🌥️', '☀️', '🌈', '🦋', '🕊️', '🦢', '🦆', '🐦', '🐝', '', '🦋',
+  '📝', '📖', '📚', '🔖', '️', '🖋️', '🖊️', '🎨', '🎭', '🎵', '', '🎼', '💭', '💬', '🗨️', '🗯️',
+  '🪶', '🪷', '🪻', '', '🏔️', '🏕️', '🌌', '🌃', '🌆', '', '🌄', '🌅', '️', '🌠', '🎇', ''
+];
+
 function toggleFilters() {
-  const panel = document.getElementById('filtersPanel');
-  const btn = document.getElementById('filterBtn');
-  panel.classList.toggle('show');
-  btn.classList.toggle('active');
+  document.getElementById('filtersPanel').classList.toggle('show');
+  document.getElementById('filterBtn').classList.toggle('active');
 }
 
 function filterByTag(tag) {
@@ -1255,9 +1741,8 @@ function selectFolder(fid) {
 function addTag() {
   const name = prompt('Название тега:');
   if (!name || !name.trim()) return;
-  const colors = ['#a78bfa','#6ee7b7','#f472b6','#fbbf24','#60a5fa','#f87171','#34d399','#fb923c','#818cf8','#e879f9'];
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  currentTags.push({ name: name.trim(), color });
+  const colors = ['#a78bfa', '#6ee7b7', '#f472b6', '#fbbf24', '#60a5fa', '#f87171', '#34d399', '#fb923c', '#818cf8', '#e879f9'];
+  currentTags.push({ name: name.trim(), color: colors[Math.floor(Math.random() * colors.length)] });
   renderTagsEditor();
 }
 
@@ -1266,7 +1751,6 @@ function removeTag(idx) {
   renderTagsEditor();
 }
 
-// === FOLDER MANAGEMENT ===
 function openCreateFolder() {
   document.getElementById('newFolderName').value = '';
   document.getElementById('newFolderColor').value = '#a78bfa';
@@ -1278,7 +1762,7 @@ function closeCreateFolder() {
   document.getElementById('createFolderModal').classList.remove('show');
 }
 
-function saveNewFolder() {
+async function saveNewFolder() {
   const name = document.getElementById('newFolderName').value.trim();
   const color = document.getElementById('newFolderColor').value;
   
@@ -1287,34 +1771,31 @@ function saveNewFolder() {
     return;
   }
   
-  if (data.folders.length >= MAX_FOLDERS) {
-    showToast(`Максимум ${MAX_FOLDERS} папок`);
+  if (data.folders.length >= 10) {
+    showToast('Максимум 10 папок');
     return;
   }
   
   const newFolder = {
-    id: USER_FOLDER_PREFIX + genId(),
+    id: 'user_' + genId(),
     name: name,
     color: color,
     isUser: true
   };
   
   data.folders.push(newFolder);
-  saveData();
+  await saveData();
   closeCreateFolder();
-  
   selectedFolder = newFolder.id;
   renderFolderSelector();
   showToast('✨ Папка создана');
 }
 
-function editFolder(fid, el) {
+function editFolder(fid) {
   const folder = data.folders.find(f => f.id === fid);
   if (!folder || !folder.isUser) return;
-  
-  const currentName = folder.name;
-  const newName = prompt('Изменить название папки:', currentName);
-  if (newName && newName.trim() && newName !== currentName) {
+  const newName = prompt('Изменить название папки:', folder.name);
+  if (newName && newName.trim() && newName !== folder.name) {
     folder.name = newName.trim();
     saveData();
     renderAll();
@@ -1325,14 +1806,12 @@ function editFolder(fid, el) {
 function deleteFolder(fid) {
   const folder = data.folders.find(f => f.id === fid);
   if (!folder || !folder.isUser) return;
-  
-  const poemsInFolder = data.poems.filter(p => p.folder === fid).length;
-  if (poemsInFolder > 0) {
-    showToast(`Сначала перенесите ${poemsInFolder} стих(ов) из папки`);
+  const count = data.poems.filter(p => p.folder === fid).length;
+  if (count > 0) {
+    showToast(`Перенесите ${count} стих(ов) из папки`);
     return;
   }
-  
-  if (confirm(`Удалить папку "${folder.name}"?`)) {
+  if (confirm(`Удалить "${folder.name}"?`)) {
     data.folders = data.folders.filter(f => f.id !== fid);
     saveData();
     renderAll();
@@ -1346,7 +1825,6 @@ function openCreate() {
     openCreateFolder();
     return;
   }
-  
   editingId = null;
   document.getElementById('editorTitle').textContent = 'Новый стих';
   document.getElementById('poemTitleInput').value = '';
@@ -1357,7 +1835,6 @@ function openCreate() {
   renderTagsEditor();
   renderFolderSelector();
   
-  // Load saved font size
   const savedSize = localStorage.getItem('poetry_editor_font_size') || '16';
   document.getElementById('fontSizeSlider').value = savedSize;
   document.getElementById('fontSizeValue').textContent = savedSize + 'px';
@@ -1379,7 +1856,6 @@ function openEdit(id) {
   renderTagsEditor();
   renderFolderSelector();
   
-  // Load saved font size
   const savedSize = localStorage.getItem('poetry_editor_font_size') || '16';
   document.getElementById('fontSizeSlider').value = savedSize;
   document.getElementById('fontSizeValue').textContent = savedSize + 'px';
@@ -1393,7 +1869,7 @@ function closeEditor() {
   document.getElementById('editorScreen').classList.remove('active');
 }
 
-function savePoem() {
+async function savePoem() {
   const title = document.getElementById('poemTitleInput').value.trim();
   const author = document.getElementById('poemAuthorInput').value.trim();
   const content = document.getElementById('poemContent').innerHTML;
@@ -1430,7 +1906,7 @@ function savePoem() {
     showToast('✨ Стих сохранён');
   }
 
-  saveData();
+  await saveData();
   closeEditor();
   renderAll();
 }
@@ -1439,8 +1915,9 @@ function openView(id) {
   const poem = data.poems.find(p => p.id === id);
   if (!poem) return;
   viewingId = id;
+  currentViewingPoemId = id;
   const folder = data.folders.find(f => f.id === poem.folder);
-  const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' });
+  const date = new Date(poem.updatedAt || poem.createdAt).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 
   document.getElementById('viewContent').innerHTML = `
     <div class="poem-view-title">${escHtml(poem.title)}</div>
@@ -1451,7 +1928,7 @@ function openView(id) {
     </div>
     ${poem.tags.length ? `<div class="poem-view-tags"><div class="tags-row">${poem.tags.map(t => `<span class="tag-badge" style="background:${t.color}">${escHtml(t.name)}</span>`).join('')}</div></div>` : ''}
     ${folder ? `<div class="poem-view-folder">📁 ${escHtml(folder.name)}</div>` : ''}
-    <div class="poem-view-text">${poem.content}</div>
+    <div class="poem-view-text" id="viewPoemText">${poem.content}</div>
   `;
 
   document.getElementById('viewActions').innerHTML = `
@@ -1460,12 +1937,38 @@ function openView(id) {
     <button class="btn btn-danger" onclick="confirmDelete('${id}')">🗑 Удалить</button>
   `;
 
+  // Load saved view font size
+  const savedViewSize = localStorage.getItem('poetry_view_font_size') || '18';
+  document.getElementById('viewFontSizeSlider').value = savedViewSize;
+  document.getElementById('viewFontSizeValue').textContent = savedViewSize + 'px';
+  updateViewFontSize(savedViewSize);
+
   document.getElementById('viewScreen').classList.add('active');
 }
 
 function closeView() {
   document.getElementById('viewScreen').classList.remove('active');
   viewingId = null;
+  currentViewingPoemId = null;
+}
+
+function copyPoemText() {
+  const poem = data.poems.find(p => p.id === currentViewingPoemId);
+  if (!poem) return;
+  
+  const text = `${poem.title}\n${poem.author}\n\n${stripHtml(poem.content)}`;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('📋 Скопировано в буфер');
+  }).catch(() => {
+    // Fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showToast('📋 Скопировано в буфер');
+  });
 }
 
 function openTransfer(id) {
@@ -1479,7 +1982,7 @@ function selectTransferFolder(fid, el) {
   el.classList.add('selected');
 }
 
-function confirmTransfer() {
+async function confirmTransfer() {
   const selected = document.querySelector('#transferFolders .folder-option.selected');
   if (!selected) { showToast('Выберите папку'); return; }
 
@@ -1488,7 +1991,7 @@ function confirmTransfer() {
   if (poem) {
     poem.folder = fid;
     poem.updatedAt = new Date().toISOString();
-    saveData();
+    await saveData();
     showToast('📂 Стих перенесён');
     renderAll();
   }
@@ -1504,9 +2007,9 @@ function closeTransfer() {
 function confirmDelete(id) {
   const dialog = document.getElementById('confirmDialog');
   document.getElementById('confirmText').textContent = 'Удалить этот стих? Это действие нельзя отменить.';
-  document.getElementById('confirmBtn').onclick = () => {
+  document.getElementById('confirmBtn').onclick = async () => {
     data.poems = data.poems.filter(p => p.id !== id);
-    saveData();
+    await saveData();
     closeConfirm();
     closeView();
     renderAll();
@@ -1517,6 +2020,16 @@ function confirmDelete(id) {
 
 function closeConfirm() {
   document.getElementById('confirmDialog').classList.remove('show');
+}
+
+function openSettings() {
+  updateStorageInfo();
+  updateStorageStatus();
+  document.getElementById('settingsScreen').classList.add('active');
+}
+
+function closeSettings() {
+  document.getElementById('settingsScreen').classList.remove('active');
 }
 
 // ==================== EDITOR COMMANDS ====================
@@ -1531,8 +2044,7 @@ function execCmdVal(cmd, val) {
 }
 
 function toggleEmojiPicker() {
-  const picker = document.getElementById('emojiPicker');
-  picker.classList.toggle('show');
+  document.getElementById('emojiPicker').classList.toggle('show');
 }
 
 function insertEmoji(emoji) {
@@ -1542,67 +2054,56 @@ function insertEmoji(emoji) {
   document.getElementById('emojiPicker').classList.remove('show');
 }
 
-// ==================== FONT SIZE ====================
 function updateEditorFontSize(px) {
   const editor = document.getElementById('poemContent');
-  if (editor) {
-    editor.style.fontSize = px + 'px';
-  }
+  if (editor) editor.style.fontSize = px + 'px';
   document.getElementById('fontSizeValue').textContent = px + 'px';
   localStorage.setItem('poetry_editor_font_size', px);
 }
 
-// ==================== EXPORT/IMPORT ====================
-function exportToJSON() {
-  const exportData = {
-    app: 'Поэтический Блокнот',
-    version: '1.1',
-    exportedAt: new Date().toISOString(),
-    folders: data.folders,
-    poems: data.poems
-  };
-  
-  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `poetry-backup-${new Date().toISOString().slice(0,10)}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast('📦 Экспорт завершён');
+function updateViewFontSize(px) {
+  const text = document.getElementById('viewPoemText');
+  if (text) text.style.fontSize = px + 'px';
+  document.getElementById('viewFontSizeValue').textContent = px + 'px';
+  localStorage.setItem('poetry_view_font_size', px);
 }
 
-function importFromJSON(input) {
-  const file = input.files[0];
-  if (!file) return;
+// ==================== TEXT COLOR PICKER ====================
+let colorPickerTimeout = null;
+
+document.addEventListener('selectionchange', () => {
+  const popup = document.getElementById('colorPickerPopup');
+  const selection = window.getSelection();
   
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const imported = JSON.parse(e.target.result);
+  if (selection.toString().length > 0 && document.activeElement.id === 'poemContent') {
+    // Show color picker after a short delay
+    clearTimeout(colorPickerTimeout);
+    colorPickerTimeout = setTimeout(() => {
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
       
-      if (!imported.folders || !imported.poems) {
-        showToast('❌ Неверный формат файла');
-        return;
-      }
-      
-      if (confirm(`Импортировать ${imported.poems.length} стих(ов) и ${imported.folders.length} папок? Текущие данные будут заменены.`)) {
-        data.folders = imported.folders.map(f => ({...f, isUser: true}));
-        data.poems = imported.poems;
-        saveData();
-        renderAll();
-        showToast('✅ Импорт завершён');
-      }
-    } catch(err) {
-      showToast('❌ Ошибка чтения файла');
-      console.error(err);
-    }
-    input.value = '';
-  };
-  reader.readAsText(file);
+      popup.style.left = (rect.left + window.scrollX) + 'px';
+      popup.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+      popup.classList.add('show');
+    }, 300);
+  } else {
+    clearTimeout(colorPickerTimeout);
+    popup.classList.remove('show');
+  }
+});
+
+function applyTextColor(color) {
+  document.execCommand('foreColor', false, color);
+  document.getElementById('colorPickerPopup').classList.remove('show');
+  document.getElementById('poemContent').focus();
 }
+
+// Hide color picker when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.color-picker-popup') && !e.target.closest('.editor-area')) {
+    document.getElementById('colorPickerPopup').classList.remove('show');
+  }
+});
 
 // ==================== UTILS ====================
 function escHtml(str) {
@@ -1635,7 +2136,6 @@ function renderAll() {
 document.getElementById('searchInput').addEventListener('input', renderPoems);
 document.getElementById('filterDate').addEventListener('change', renderPoems);
 
-// Close emoji picker on outside click
 document.addEventListener('click', (e) => {
   const picker = document.getElementById('emojiPicker');
   const btn = e.target.closest('button[onclick="toggleEmojiPicker()"]');
@@ -1657,9 +2157,16 @@ document.getElementById('createFolderModal').addEventListener('click', (e) => {
 });
 
 // ==================== INIT ====================
-function init() {
+async function init() {
+  await loadData();
   renderAll();
   renderEmojiPicker();
+  
+  const savedSize = localStorage.getItem('poetry_editor_font_size');
+  if (savedSize && document.getElementById('fontSizeSlider')) {
+    document.getElementById('fontSizeSlider').value = savedSize;
+    document.getElementById('fontSizeValue').textContent = savedSize + 'px';
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);
